@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>数智驱动·山系新生 — 睿森服饰数字化+AI升级战略方案</title>
+<style>
+:root{--deep:#0a1628;--blue:#0066CC;--gold:#d4a843;--white:#ffffff;--gray:#8899aa;--light:#e8edf3;--card:rgba(255,255,255,0.06);--border:rgba(255,255,255,0.1)}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-snap-type:y mandatory;overflow-y:scroll;scroll-behavior:smooth;font-size:16px}
+body{font-family:"PingFang SC","Microsoft YaHei","Helvetica Neue",sans-serif;background:var(--deep);color:var(--white);line-height:1.6;-webkit-font-smoothing:antialiased}
+section{min-height:100vh;scroll-snap-align:start;display:flex;flex-direction:column;justify-content:center;padding:60px 80px;position:relative;overflow:hidden}
+/* Nav dots */
+.nav-dots{position:fixed;right:24px;top:50%;transform:translateY(-50%);z-index:100;display:flex;flex-direction:column;gap:12px}
+.nav-dots a{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,0.25);transition:.3s;display:block}
+.nav-dots a.active{background:var(--gold);transform:scale(1.4)}
+/* Typography */
+.big-view{font-size:clamp(28px,4vw,52px);font-weight:700;line-height:1.25;margin-bottom:32px;background:linear-gradient(135deg,var(--white),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.sub-title{font-size:clamp(16px,2vw,24px);color:var(--gray);margin-bottom:24px;font-weight:400}
+.section-tag{display:inline-block;padding:4px 16px;border:1px solid var(--gold);color:var(--gold);border-radius:20px;font-size:13px;letter-spacing:2px;margin-bottom:20px;text-transform:uppercase}
+/* Cards */
+.card-grid{display:grid;gap:20px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px;transition:.3s}
+.card:hover{border-color:var(--gold);transform:translateY(-2px)}
+.card h3{font-size:18px;margin-bottom:8px;color:var(--gold)}
+.card p{font-size:14px;color:var(--gray);line-height:1.5}
+/* KPI bar */
+.kpi-bar{display:flex;gap:16px;margin-top:28px;flex-wrap:wrap}
+.kpi-item{flex:1;min-width:140px;background:linear-gradient(135deg,rgba(0,102,204,0.15),rgba(212,168,67,0.1));border:1px solid var(--border);border-radius:10px;padding:16px 20px;text-align:center}
+.kpi-item .val{font-size:clamp(22px,3vw,36px);font-weight:800;color:var(--gold)}
+.kpi-item .label{font-size:13px;color:var(--gray);margin-top:4px}
+/* Layout helpers */
+.split{display:flex;gap:40px;align-items:stretch}
+.split>*{flex:1}
+.quote-bar{margin-top:auto;padding-top:24px;border-top:1px solid var(--border);font-size:15px;color:var(--gold);font-style:italic;text-align:center}
+/* Flow / Arch diagrams */
+.arch-layer{border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:12px;position:relative}
+.arch-layer .tag{position:absolute;left:-1px;top:50%;transform:translateY(-50%) rotate(-90deg);background:var(--blue);color:#fff;font-size:11px;padding:2px 10px;border-radius:0 0 8px 8px;white-space:nowrap}
+.flow-step{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.flow-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 16px;font-size:14px;flex:1;text-align:center}
+.flow-arrow{color:var(--gold);font-size:20px}
+/* Bar chart CSS */
+.bar-chart{display:flex;align-items:flex-end;gap:24px;height:200px;padding-top:20px}
+.bar-col{display:flex;flex-direction:column;align-items:center;flex:1}
+.bar{width:100%;border-radius:6px 6px 0 0;background:linear-gradient(to top,var(--blue),var(--gold));transition:height 1s;position:relative}
+.bar-label{margin-top:8px;font-size:13px;color:var(--gray)}
+.bar-val{position:absolute;top:-24px;left:50%;transform:translateX(-50%);font-size:13px;font-weight:700;color:var(--gold);white-space:nowrap}
+/* Gantt */
+.gantt{display:grid;grid-template-columns:120px repeat(10,1fr);gap:4px;align-items:center;margin:20px 0}
+.gantt-label{font-size:13px;color:var(--gray);text-align:right;padding-right:12px}
+.gantt-bar{height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:#fff}
+.gantt-header{font-size:11px;color:var(--gray);text-align:center}
+/* Table */
+.data-table{width:100%;border-collapse:collapse;font-size:14px}
+.data-table th{text-align:left;padding:10px 12px;border-bottom:2px solid var(--gold);color:var(--gold);font-weight:600}
+.data-table td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--light)}
+/* Demo button */
+.demo-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 24px;background:linear-gradient(135deg,var(--blue),#0088ff);color:#fff;border-radius:8px;text-decoration:none;font-weight:600;font-size:14px;transition:.3s;margin-top:12px}
+.demo-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,102,204,0.4)}
+/* Cover specific */
+.cover-center{text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%}
+.cover-title{font-size:clamp(40px,6vw,80px);font-weight:900;background:linear-gradient(135deg,var(--white) 30%,var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.15;margin-bottom:16px}
+.cover-sub{font-size:clamp(16px,2.2vw,26px);color:var(--gray);margin-bottom:40px}
+.cover-footer{font-size:14px;color:var(--gray);opacity:.7;margin-top:auto;padding-top:40px}
+/* Scene grid s4 */
+.scene-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.scene-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px 20px;text-align:center;transition:.3s;cursor:pointer;text-decoration:none;color:inherit;display:block}
+.scene-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 8px 30px rgba(212,168,67,0.15)}
+.scene-icon{font-size:36px;margin-bottom:12px}
+.scene-card h3{font-size:16px;margin-bottom:6px;color:var(--white)}
+.scene-card p{font-size:13px;color:var(--gray);margin-bottom:8px}
+.scene-metric{font-size:12px;color:var(--gold);font-weight:600}
+/* Responsive */
+@media(max-width:900px){
+section{padding:40px 24px}
+.split{flex-direction:column;gap:24px}
+.scene-grid{grid-template-columns:repeat(2,1fr)}
+.bar-chart{height:150px;gap:12px}
+.gantt{grid-template-columns:80px repeat(10,1fr);font-size:11px}
+.nav-dots{right:10px;gap:8px}
+.nav-dots a{width:7px;height:7px}
+.kpi-bar{gap:10px}
+.kpi-item{min-width:100px;padding:12px}
+}
+@media(max-width:600px){
+.scene-grid{grid-template-columns:1fr}
+.cover-title{font-size:36px}
+}
+/* Animations */
+.fade-up{opacity:0;transform:translateY(30px);transition:opacity .7s,transform .7s}
+.fade-up.visible{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" id="navDots"></nav>
+
+<!-- S1: Cover -->
+<section id="s1">
+<div class="cover-center">
+<div class="section-tag fade-up">NOTHOMME × Digital Transformation</div>
+<h1 class="cover-title fade-up">数智驱动·山系新生</h1>
+<p class="cover-sub fade-up">广州睿森服饰有限公司 数字化+AI升级战略方案</p>
+<div style="display:flex;gap:24px;margin-top:20px;flex-wrap:wrap;justify-content:center" class="fade-up">
+<div style="text-align:center"><div style="font-size:32px;font-weight:800;color:var(--gold)">440W+</div><div style="font-size:13px;color:var(--gray)">淘宝粉丝</div></div>
+<div style="text-align:center"><div style="font-size:32px;font-weight:800;color:var(--gold)">5亿</div><div style="font-size:13px;color:var(--gray)">2023年营业额</div></div>
+<div style="text-align:center"><div style="font-size:32px;font-weight:800;color:var(--gold)">10万+</div><div style="font-size:13px;color:var(--gray)">月销件数</div></div>
+</div>
+<p class="cover-footer fade-up">2026年7月 ｜ 钉钉 × 通义千问 联合呈现</p>
+</div>
+</section>
+
+<!-- S2: Strategic Judgment -->
+<section id="s2">
+<div class="section-tag fade-up">STRATEGIC INSIGHT</div>
+<div class="big-view fade-up">从电商爆款到品牌资产<br>数字化是必经之路</div>
+<div class="split">
+<div style="display:flex;flex-direction:column;gap:16px" class="fade-up">
+<div class="card"><h3>🏷️ 服装AI市场规模</h3><p>2024年 <strong style="color:var(--gold)">18.82亿</strong> → 2028年 <strong style="color:var(--gold)">61.53亿</strong><br>CAGR 34.6%，增速领跑零售行业</p></div>
+<div class="card"><h3>🎨 AI辅助设计渗透率</h3><p>2024年 <strong style="color:var(--gold)">22%</strong> → 2027年 <strong style="color:var(--gold)">38%</strong><br>头部品牌已将AI纳入核心设计流程</p></div>
+<div class="card"><h3>👕 AR虚拟试衣采纳率</h3><p>2024年 <strong style="color:var(--gold)">18%</strong> → 2027年 <strong style="color:var(--gold)">28%</strong><br>退货率降低25%，转化率提升18%</p></div>
+</div>
+<div class="fade-up">
+<div class="card" style="height:100%;display:flex;flex-direction:column;justify-content:center">
+<h3 style="margin-bottom:16px">转型路径</h3>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:16px">
+<div style="flex:1;background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);border-radius:8px;padding:16px;text-align:center">
+<div style="font-size:13px;color:#ff8888;margin-bottom:4px">现状</div>
+<div style="font-size:14px">多渠道分散运营<br>数据孤岛<br>经验驱动决策</div>
+</div>
+<div style="font-size:28px;color:var(--gold)">→</div>
+<div style="flex:1;background:rgba(100,255,100,0.1);border:1px solid rgba(100,255,100,0.3);border-radius:8px;padding:16px;text-align:center">
+<div style="font-size:13px;color:#88ff88;margin-bottom:4px">目标</div>
+<div style="font-size:14px">全链路数字化品牌<br>数据统一可视<br>AI智能决策</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="quote-bar fade-up">"设计、品质、服务"三大基石需要数字化赋能才能持续领先</div>
+</section>
+
+<!-- S3: Three-Layer Architecture -->
+<section id="s3">
+<div class="section-tag fade-up">ARCHITECTURE</div>
+<div class="big-view fade-up">三层架构，增量赋能</div>
+<div class="split">
+<div style="flex:1.2" class="fade-up">
+<div class="arch-layer" style="border-color:var(--gold);background:rgba(212,168,67,0.08)">
+<div class="tag" style="background:var(--gold);color:var(--deep)">业务场景层</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;padding-left:20px">
+<span style="background:var(--gold);color:var(--deep);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600">智能设计助手</span>
+<span style="background:var(--gold);color:var(--deep);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600">全渠道库存中枢</span>
+<span style="background:var(--gold);color:var(--deep);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600">AI客服矩阵</span>
+<span style="background:var(--gold);color:var(--deep);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600">数据驱动测款</span>
+<span style="background:var(--gold);color:var(--deep);padding:8px 16px;border-radius:8px;font-size:13px;font-weight:600">供应链协同</span>
+</div>
+</div>
+<div class="arch-layer" style="border-color:var(--blue);background:rgba(0,102,204,0.08)">
+<div class="tag" style="background:var(--blue)">AI能力层</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;padding-left:20px">
+<span style="background:rgba(0,102,204,0.3);padding:8px 16px;border-radius:8px;font-size:13px">通义千问大模型</span>
+<span style="background:rgba(0,102,204,0.3);padding:8px 16px;border-radius:8px;font-size:13px">图像生成</span>
+<span style="background:rgba(0,102,204,0.3);padding:8px 16px;border-radius:8px;font-size:13px">NLP对话</span>
+<span style="background:rgba(0,102,204,0.3);padding:8px 16px;border-radius:8px;font-size:13px">数据分析</span>
+<span style="background:rgba(0,102,204,0.3);padding:8px 16px;border-radius:8px;font-size:13px">预测算法</span>
+</div>
+</div>
+<div class="arch-layer" style="border-color:var(--gray);background:rgba(136,153,170,0.08)">
+<div class="tag" style="background:var(--gray);color:var(--deep)">钉钉底座</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;padding-left:20px">
+<span style="background:rgba(136,153,170,0.3);padding:8px 16px;border-radius:8px;font-size:13px">组织协同</span>
+<span style="background:rgba(136,153,170,0.3);padding:8px 16px;border-radius:8px;font-size:13px">宜搭低代码</span>
+<span style="background:rgba(136,153,170,0.3);padding:8px 16px;border-radius:8px;font-size:13px">连接器</span>
+<span style="background:rgba(136,153,170,0.3);padding:8px 16px;border-radius:8px;font-size:13px">安全合规</span>
+</div>
+</div>
+</div>
+<div style="flex:0.8;display:flex;flex-direction:column;justify-content:center" class="fade-up">
+<div class="card" style="border-left:3px solid var(--gold)">
+<h3>💡 核心原则</h3>
+<p style="margin-top:8px"><strong>尊重现有电商体系</strong><br>不替换、不对立，在现有淘宝/抖音/得物/京东运营基础上增量赋能</p>
+</div>
+<div class="card" style="border-left:3px solid var(--blue);margin-top:16px">
+<h3>🔗 无缝集成</h3>
+<p style="margin-top:8px">通过钉钉连接器对接各平台API，实现数据自动回流，无需人工搬运</p>
+</div>
+<div class="card" style="border-left:3px solid #44bb88;margin-top:16px">
+<h3>🛡️ 数据安全</h3>
+<p style="margin-top:8px">企业级数据隔离，设计稿与用户数据全程加密，符合服饰行业合规要求</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- S4: Five Scenarios Overview -->
+<section id="s4">
+<div class="section-tag fade-up">SCENARIOS</div>
+<div class="big-view fade-up">五大场景，全面赋能</div>
+<div class="scene-grid fade-up">
+<a href="#s5" class="scene-card">
+<div class="scene-icon">🎨</div>
+<h3>智能设计助手</h3>
+<p>AI生成款式方案，设计师聚焦创意</p>
+<div class="scene-metric">上新周期 ↓50%</div>
+</a>
+<a href="#s6" class="scene-card">
+<div class="scene-icon">📦</div>
+<h3>全渠道库存中枢</h3>
+<p>多平台一盘货实时可视可控</p>
+<div class="scene-metric">超卖率 ↓90%</div>
+</a>
+<a href="#s7" class="scene-card">
+<div class="scene-icon">🤖</div>
+<h3>AI客服矩阵</h3>
+<p>AI承担80%重复咨询释放人力</p>
+<div class="scene-metric">人力释放 60%</div>
+</a>
+<a href="#s8" class="scene-card">
+<div class="scene-icon">📊</div>
+<h3>数据驱动测款</h3>
+<p>用数据代替经验精准选品</p>
+<div class="scene-metric">爆款成功率 ↑40%</div>
+</a>
+<a href="#s9" class="scene-card">
+<div class="scene-icon">🏭</div>
+<h3>供应链协同</h3>
+<p>下单到交付全链路透明可控</p>
+<div class="scene-metric">交期准确率 ↑35%</div>
+</a>
+<a href="demo.html" class="scene-card" style="border-color:var(--gold);background:rgba(212,168,67,0.08)">
+<div class="scene-icon">🚀</div>
+<h3 style="color:var(--gold)">在线Demo体验</h3>
+<p>点击体验AI设计/客服/库存等核心功能演示</p>
+<div class="scene-metric">立即体验 →</div>
+</a>
+</div>
+</section>
+
+<!-- S5: Smart Design Assistant -->
+<section id="s5">
+<div class="section-tag fade-up">SCENARIO 01</div>
+<div class="big-view fade-up">AI生成海量款式方案<br>设计师聚焦创意优化</div>
+<div class="split">
+<div class="fade-up">
+<div style="margin-bottom:20px;font-size:15px;color:var(--gray);font-weight:600">传统 vs 数字化设计流程</div>
+<div style="display:flex;gap:16px;margin-bottom:16px">
+<div style="flex:1;border:1px solid rgba(255,100,100,0.3);border-radius:10px;padding:16px;background:rgba(255,100,100,0.05)">
+<div style="font-size:12px;color:#ff8888;margin-bottom:8px;font-weight:600">❌ 传统流程</div>
+<div class="flow-step"><div class="flow-box" style="font-size:12px">市场调研<br><span style="color:var(--gray)">2-3天</span></div></div>
+<div class="flow-step"><div class="flow-box" style="font-size:12px">手绘草图<br><span style="color:var(--gray)">3-5天</span></div></div>
+<div class="flow-step"><div class="flow-box" style="font-size:12px">打版修改<br><span style="color:var(--gray)">7-10天</span></div></div>
+<div class="flow-step"><div class="flow-box" style="font-size:12px">系列定稿<br><span style="color:var(--gray)">3-5天</span></div></div>
+<div style="text-align:center;font-size:13px;color:#ff8888;margin-top:8px;font-weight:600">总计 15-23天</div>
+</div>
+<div style="flex:1;border:1px solid rgba(100,255,100,0.3);border-radius:10px;padding:16px;background:rgba(100,255,100,0.05)">
+<div style="font-size:12px;color:#88ff88;margin-bottom:8px;font-weight:600">✅ AI赋能流程</div>
+<div class="flow-step"><div class="flow-box" style="font-size:12px">AI趋势分析<br><span style="color:var(--gold)">实时</span></div></div>
+<div class="flow-step"><div class="flow-box" style="font-size:12px">AI批量出图<br><span style="color:var(--gold)">1天</span></div></div>
+<div class="flow-step"><div class="flow-box" style="font-size:12px">设计师精选优化<br><span style="color:var(--gold)">2-3天</span></div></div>
+<div class="flow-step"><div class="flow-box" style="font-size:12px">快速打样确认<br><span style="color:var(--gold)">3-5天</span></div></div>
+<div style="text-align:center;font-size:13px;color:#88ff88;margin-top:8px;font-weight:600">总计 6-9天</div>
+</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px" class="fade-up">
+<div class="card"><h3>🎨 AI款式生成</h3><p>输入风格关键词+参考图，AI秒级生成数十种山系户外款式方案，支持细节微调</p></div>
+<div class="card"><h3>🧵 面料配色推荐</h3><p>基于当季流行色与品牌DNA，智能推荐面料组合与配色方案，减少试错成本</p></div>
+<div class="card"><h3>📐 系列出图周期减半</h3><p>从概念到完整系列效果图，AI辅助将传统2周缩短至1周内完成</p></div>
+</div>
+</div>
+<div class="kpi-bar fade-up">
+<div class="kpi-item"><div class="val">↑100%</div><div class="label">设计效率</div></div>
+<div class="kpi-item"><div class="val">↓50%</div><div class="label">上新周期</div></div>
+<div class="kpi-item"><div class="val">↑30%</div><div class="label">爆款命中率</div></div>
+</div>
+</section>
+
+<!-- S6: Omni-channel Inventory Hub -->
+<section id="s6">
+<div class="section-tag fade-up">SCENARIO 02</div>
+<div class="big-view fade-up">淘宝/抖音/得物/线下店<br>一盘货实时可视</div>
+<div class="split">
+<div class="fade-up">
+<div style="margin-bottom:16px;font-size:15px;color:var(--gray);font-weight:600">全渠道库存同步流程</div>
+<div style="position:relative;padding:20px;border:1px solid var(--border);border-radius:12px;background:var(--card)">
+<!-- Central hub -->
+<div style="text-align:center;margin-bottom:20px">
+<div style="display:inline-block;background:linear-gradient(135deg,var(--blue),var(--gold));padding:12px 28px;border-radius:10px;font-weight:700;font-size:15px">📦 库存中枢 (钉钉)</div>
+</div>
+<!-- Channels -->
+<div style="display:grid;grid-template-columns:repeat(2,1fr);gap:10px">
+<div style="background:rgba(0,102,204,0.15);border:1px solid rgba(0,102,204,0.3);border-radius:8px;padding:10px;text-align:center;font-size:13px">🛒 淘宝/天猫<br><span style="font-size:11px;color:var(--gray)">实时同步</span></div>
+<div style="background:rgba(0,102,204,0.15);border:1px solid rgba(0,102,204,0.3);border-radius:8px;padding:10px;text-align:center;font-size:13px">📱 抖音电商<br><span style="font-size:11px;color:var(--gray)">实时同步</span></div>
+<div style="background:rgba(0,102,204,0.15);border:1px solid rgba(0,102,204,0.3);border-radius:8px;padding:10px;text-align:center;font-size:13px">👟 得物<br><span style="font-size:11px;color:var(--gray)">实时同步</span></div>
+<div style="background:rgba(0,102,204,0.15);border:1px solid rgba(0,102,204,0.3);border-radius:8px;padding:10px;text-align:center;font-size:13px">🏪 5城门店+集合店<br><span style="font-size:11px;color:var(--gray)">POS对接</span></div>
+</div>
+<div style="text-align:center;margin-top:12px;font-size:12px;color:var(--gold)">⚡ 库存变动 &lt;3秒 全渠道同步</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px" class="fade-up">
+<div class="card"><h3>🔄 多平台库存实时同步</h3><p>任一渠道售出自动扣减全渠道库存，杜绝超卖；支持预留安全库存策略</p></div>
+<div class="card"><h3>📈 智能补货预警</h3><p>基于历史销量+季节因子+活动日历，提前7天预测补货需求，自动生成采购建议</p></div>
+<div class="card"><h3>💰 滞销自动促销建议</h3><p>库龄超30天自动标记，AI生成差异化促销方案（满减/搭配/渠道专属折扣）</p></div>
+</div>
+</div>
+<div class="kpi-bar fade-up">
+<div class="kpi-item"><div class="val">↓90%</div><div class="label">超卖率</div></div>
+<div class="kpi-item"><div class="val">↑40%</div><div class="label">库存周转</div></div>
+<div class="kpi-item"><div class="val">↓60%</div><div class="label">缺货损失</div></div>
+</div>
+</section>
+
+<!-- S7: AI Customer Service Matrix -->
+<section id="s7">
+<div class="section-tag fade-up">SCENARIO 03</div>
+<div class="big-view fade-up">AI承担80%重复咨询<br>人工专注高价值服务</div>
+<div class="split">
+<div class="fade-up">
+<div style="margin-bottom:16px;font-size:15px;color:var(--gray);font-weight:600">AI客服工作流</div>
+<div style="border:1px solid var(--border);border-radius:12px;padding:20px;background:var(--card)">
+<div class="flow-step"><div class="flow-box" style="background:rgba(0,102,204,0.2)">👤 客户发起咨询（淘宝/抖音/小程序）</div></div>
+<div style="text-align:center;color:var(--gold);font-size:18px;margin:4px 0">↓</div>
+<div class="flow-step"><div class="flow-box" style="background:rgba(212,168,67,0.15);border-color:var(--gold)">🤖 AI意图识别 + 知识库匹配</div></div>
+<div style="display:flex;gap:10px;margin:8px 0">
+<div style="flex:1;text-align:center">
+<div style="font-size:12px;color:#88ff88;margin-bottom:4px">80% 命中</div>
+<div class="flow-box" style="background:rgba(100,255,100,0.1);border-color:rgba(100,255,100,0.3);font-size:12px">✅ AI自动应答<br>尺码/材质/物流/退换</div>
+</div>
+<div style="flex:1;text-align:center">
+<div style="font-size:12px;color:#ff8888;margin-bottom:4px">20% 复杂/情绪</div>
+<div class="flow-box" style="background:rgba(255,100,100,0.1);border-color:rgba(255,100,100,0.3);font-size:12px">🔔 智能转人工<br>附带上下文摘要</div>
+</div>
+</div>
+<div style="text-align:center;color:var(--gold);font-size:18px;margin:4px 0">↓</div>
+<div class="flow-step"><div class="flow-box" style="background:rgba(0,102,204,0.2)">📊 会话数据回流 → 持续优化知识库</div></div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px" class="fade-up">
+<div class="card"><h3>💬 尺码/材质/发货自动应答</h3><p>内置NOTHOMME全线产品知识库，精准回答尺码推荐、面料参数、物流时效等高频问题</p></div>
+<div class="card"><h3>🔄 退换货智能处理</h3><p>自动识别退换原因，匹配售后政策，生成处理方案，仅需人工一键确认</p></div>
+<div class="card"><h3>😤 客户情绪识别升级主管</h3><p>NLP实时分析对话情绪，负面情绪自动升级至资深客服/主管，避免客诉扩大</p></div>
+</div>
+</div>
+<div class="kpi-bar fade-up">
+<div class="kpi-item"><div class="val">60%</div><div class="label">人力释放</div></div>
+<div class="kpi-item"><div class="val">↑300%</div><div class="label">响应速度</div></div>
+<div class="kpi-item"><div class="val">↑15%</div><div class="label">满意度</div></div>
+</div>
+</section>
+
+<!-- S8: Data-Driven Testing -->
+<section id="s8">
+<div class="section-tag fade-up">SCENARIO 04</div>
+<div class="big-view fade-up">用数据代替经验<br>让每一款新品都有据可依</div>
+<div class="split">
+<div class="fade-up">
+<div style="margin-bottom:16px;font-size:15px;color:var(--gray);font-weight:600">测款决策流程</div>
+<div style="border:1px solid var(--border);border-radius:12px;padding:20px;background:var(--card)">
+<div class="flow-step"><div class="flow-box" style="background:rgba(0,102,204,0.2)">🎯 AI选品建议 → 小批量生产(50-100件)</div></div>
+<div style="text-align:center;color:var(--gold);font-size:18px;margin:4px 0">↓</div>
+<div class="flow-step"><div class="flow-box" style="background:rgba(212,168,67,0.15);border-color:var(--gold)">📊 多渠道A/B测试 (7-14天)</div></div>
+<div style="text-align:center;color:var(--gold);font-size:18px;margin:4px 0">↓</div>
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:8px 0">
+<div style="text-align:center;background:rgba(100,255,100,0.1);border:1px solid rgba(100,255,100,0.3);border-radius:8px;padding:10px;font-size:12px">
+<div style="color:#88ff88;font-weight:600;margin-bottom:4px">🟢 放量</div>
+转化率&gt;行业均值<br>加购率达标
+</div>
+<div style="text-align:center;background:rgba(255,200,100,0.1);border:1px solid rgba(255,200,100,0.3);border-radius:8px;padding:10px;font-size:12px">
+<div style="color:#ffcc66;font-weight:600;margin-bottom:4px">🟡 调整</div>
+部分指标达标<br>优化后复测
+</div>
+<div style="text-align:center;background:rgba(255,100,100,0.1);border:1px solid rgba(255,100,100,0.3);border-radius:8px;padding:10px;font-size:12px">
+<div style="color:#ff8888;font-weight:600;margin-bottom:4px">🔴 淘汰</div>
+数据不达标<br>止损下架
+</div>
+</div>
+<div style="text-align:center;color:var(--gold);font-size:18px;margin:4px 0">↓</div>
+<div class="flow-step"><div class="flow-box" style="background:rgba(0,102,204,0.2)">📈 数据沉淀 → 反哺下一轮选品模型</div></div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px" class="fade-up">
+<div class="card"><h3>🔬 A/B测试自动化</h3><p>自动分配流量、监控转化漏斗、生成统计显著性报告，告别手动盯盘</p></div>
+<div class="card"><h3>💭 用户反馈情感分析</h3><p>AI解析评论/弹幕/客服对话中的产品评价，提炼真实用户偏好与改进点</p></div>
+<div class="card"><h3>🔍 竞品价格实时监控</h3><p>追踪同类山系户外品牌定价、促销、上新节奏，动态调整自身策略</p></div>
+</div>
+</div>
+<div class="kpi-bar fade-up">
+<div class="kpi-item"><div class="val">↓50%</div><div class="label">测款成本</div></div>
+<div class="kpi-item"><div class="val">↑40%</div><div class="label">爆款成功率</div></div>
+<div class="kpi-item"><div class="val">↓30%</div><div class="label">滞销款减少</div></div>
+</div>
+</section>
+
+<!-- S9: Supply Chain Collaboration -->
+<section id="s9">
+<div class="section-tag fade-up">SCENARIO 05</div>
+<div class="big-view fade-up">从下单到交付全链路透明<br>品质可控节奏可追</div>
+<div class="split">
+<div class="fade-up">
+<div style="margin-bottom:16px;font-size:15px;color:var(--gray);font-weight:600">供应链协同流程</div>
+<div style="border:1px solid var(--border);border-radius:12px;padding:20px;background:var(--card)">
+<div class="flow-step"><div class="flow-box" style="background:rgba(0,102,204,0.2)">📋 钉钉下单 → 工厂接单确认</div></div>
+<div style="text-align:center;color:var(--gold);font-size:18px;margin:4px 0">↓</div>
+<div class="flow-step"><div class="flow-box" style="background:rgba(212,168,67,0.15);border-color:var(--gold)">🏭 生产进度实时看板（面料→裁剪→缝制→质检）</div></div>
+<div style="text-align:center;color:var(--gold);font-size:18px;margin:4px 0">↓</div>
+<div class="flow-step"><div class="flow-box" style="background:rgba(0,102,204,0.2)">✅ 质检报告在线化 + AI异常检测</div></div>
+<div style="text-align:center;color:var(--gold);font-size:18px;margin:4px 0">↓</div>
+<div class="flow-step"><div class="flow-box" style="background:rgba(0,102,204,0.2)">🚚 物流追踪 → 入仓验收 → 上架通知</div></div>
+<div style="margin-top:12px;padding:10px;background:rgba(255,100,100,0.08);border:1px solid rgba(255,100,100,0.2);border-radius:8px;font-size:12px;text-align:center;color:#ffaaaa">⚠️ 交期延误自动预警 → 钉钉消息推送至相关负责人</div>
+</div>
+</div>
+<div style="display:flex;flex-direction:column;gap:14px" class="fade-up">
+<div class="card"><h3>📊 工厂进度实时看板</h3><p>每个订单节点状态可视化，品牌方随时掌握生产进度，无需反复电话催问</p></div>
+<div class="card"><h3>🔍 质检报告在线化</h3><p>工厂拍照上传质检结果，AI辅助识别常见瑕疵，不合格品自动标记拦截</p></div>
+<div class="card"><h3>⏰ 交期延误自动预警</h3><p>对比计划与实际进度，偏差超阈值自动触发预警，提前协调备选方案</p></div>
+</div>
+</div>
+<div class="kpi-bar fade-up">
+<div class="kpi-item"><div class="val">↑35%</div><div class="label">交期准确率</div></div>
+<div class="kpi-item"><div class="val">↓25%</div><div class="label">次品率</div></div>
+<div class="kpi-item"><div class="val">↑50%</div><div class="label">沟通效率</div></div>
+</div>
+</section>
+
+<!-- S10: ROI Deep Forecast -->
+<section id="s10">
+<div class="section-tag fade-up">ROI ANALYSIS</div>
+<div class="big-view fade-up">投入产出比：5个月回本<br>3年累计收益超800万</div>
+<div class="split">
+<div class="fade-up">
+<div style="margin-bottom:16px;font-size:15px;color:var(--gray);font-weight:600">投入明细（首年）</div>
+<table class="data-table">
+<thead><tr><th>项目</th><th>金额(万)</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td>钉钉专业版</td><td style="color:var(--gold)">3-5</td><td>组织协同底座</td></tr>
+<tr><td>AI能力包</td><td style="color:var(--gold)">8-12</td><td>通义千问+图像生成</td></tr>
+<tr><td>宜搭定制开发</td><td style="color:var(--gold)">10-15</td><td>库存中枢/供应链看板</td></tr>
+<tr><td>FDE实施服务</td><td style="color:var(--gold)">8-10</td><td>10周落地交付</td></tr>
+<tr><td>培训与运营</td><td style="color:var(--gold)">3-5</td><td>全员赋能+持续优化</td></tr>
+<tr style="border-top:2px solid var(--gold)"><td style="font-weight:700;color:var(--gold)">合计</td><td style="font-weight:700;color:var(--gold)">32-47</td><td></td></tr>
+</tbody>
+</table>
+</div>
+<div class="fade-up">
+<div style="margin-bottom:16px;font-size:15px;color:var(--gray);font-weight:600">3年收益预测（万元）</div>
+<div class="bar-chart">
+<div class="bar-col">
+<div class="bar" style="height:36%"><div class="bar-val">120-180</div></div>
+<div class="bar-label">Y1</div>
+</div>
+<div class="bar-col">
+<div class="bar" style="height:62%"><div class="bar-val">250-350</div></div>
+<div class="bar-label">Y2</div>
+</div>
+<div class="bar-col">
+<div class="bar" style="height:90%"><div class="bar-val">400-500</div></div>
+<div class="bar-label">Y3</div>
+</div>
+</div>
+<div style="margin-top:20px;display:flex;gap:16px">
+<div style="flex:1;text-align:center;padding:16px;background:linear-gradient(135deg,rgba(212,168,67,0.15),rgba(0,102,204,0.1));border:1px solid var(--gold);border-radius:10px">
+<div style="font-size:28px;font-weight:800;color:var(--gold)">5个月</div>
+<div style="font-size:13px;color:var(--gray)">投资回收期</div>
+</div>
+<div style="flex:1;text-align:center;padding:16px;background:linear-gradient(135deg,rgba(212,168,67,0.15),rgba(0,102,204,0.1));border:1px solid var(--gold);border-radius:10px">
+<div style="font-size:28px;font-weight:800;color:var(--gold)">1000-1500%</div>
+<div style="font-size:13px;color:var(--gray)">3年ROI</div>
+</div>
+</div>
+</div>
+</div>
+<div class="quote-bar fade-up">收益来源：设计提效节省人力 + 库存优化减少滞销 + 客服降本 + 爆款率提升增量收入</div>
+</section>
+
+<!-- S11: FDE Delivery Timeline -->
+<section id="s11">
+<div class="section-tag fade-up">DELIVERY PLAN</div>
+<div class="big-view fade-up">10周落地，分3阶段稳步推进</div>
+<div class="fade-up" style="margin:24px 0">
+<div class="gantt">
+<div class="gantt-label"></div>
+<div class="gantt-header">W1</div><div class="gantt-header">W2</div><div class="gantt-header">W3</div>
+<div class="gantt-header">W4</div><div class="gantt-header">W5</div><div class="gantt-header">W6</div><div class="gantt-header">W7</div>
+<div class="gantt-header">W8</div><div class="gantt-header">W9</div><div class="gantt-header">W10</div>
+
+<div class="gantt-label">基础模块搭建</div>
+<div class="gantt-bar" style="grid-column:2/5;background:linear-gradient(90deg,var(--blue),#0088ff)">钉钉部署+数据对接</div>
+
+<div class="gantt-label">核心场景推广</div>
+<div class="gantt-bar" style="grid-column:5/9;background:linear-gradient(90deg,#0088ff,var(--gold))">库存中枢+客服+测款上线</div>
+
+<div class="gantt-label">AI启用与验收</div>
+<div class="gantt-bar" style="grid-column:9/12;background:linear-gradient(90deg,var(--gold),#e8c060)">AI训练+全员验收</div>
+</div>
+</div>
+<div class="split fade-up">
+<div class="card">
+<h3>👥 交付团队配置</h3>
+<div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;align-items:center;gap:12px"><div style="width:36px;height:36px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:16px">👤</div><div><div style="font-weight:600">项目经理 × 1</div><div style="font-size:12px;color:var(--gray)">全程统筹、进度管控、高管汇报</div></div></div>
+<div style="display:flex;align-items:center;gap:12px"><div style="width:36px;height:36px;border-radius:50%;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:16px">👥</div><div><div style="font-weight:600">实施顾问 × 2</div><div style="font-size:12px;color:var(--gray)">系统配置、数据对接、流程梳理</div></div></div>
+<div style="display:flex;align-items:center;gap:12px"><div style="width:36px;height:36px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;font-size:16px">🧠</div><div><div style="font-weight:600">AI训练师 × 1</div><div style="font-size:12px;color:var(--gray)">知识库构建、模型调优、效果验证</div></div></div>
+</div>
+</div>
+<div class="card">
+<h3>🎯 关键里程碑</h3>
+<div style="margin-top:12px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;gap:12px;align-items:center"><div style="min-width:50px;font-size:13px;color:var(--gold);font-weight:600">W3末</div><div style="font-size:14px">基础平台就绪，数据通路打通</div></div>
+<div style="display:flex;gap:12px;align-items:center"><div style="min-width:50px;font-size:13px;color:var(--gold);font-weight:600">W7末</div><div style="font-size:14px">核心场景上线运行，首批KPI达成</div></div>
+<div style="display:flex;gap:12px;align-items:center"><div style="min-width:50px;font-size:13px;color:var(--gold);font-weight:600">W10</div><div style="font-size:14px">AI全面启用，项目验收交付</div></div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- S12: Call to Action -->
+<section id="s12">
+<div class="cover-center">
+<div class="section-tag fade-up">NEXT STEPS</div>
+<h1 class="cover-title fade-up" style="font-size:clamp(32px,5vw,60px)">携手共建<br>山系品牌数智新基建</h1>
+<div style="display:flex;gap:20px;margin:32px 0;flex-wrap:wrap;justify-content:center" class="fade-up">
+<div style="background:var(--card);border:1px solid var(--gold);border-radius:12px;padding:24px 32px;text-align:center;min-width:200px">
+<div style="font-size:32px;margin-bottom:8px">📋</div>
+<div style="font-size:16px;font-weight:600;margin-bottom:4px">Step 1</div>
+<div style="font-size:14px;color:var(--gray)">签署合作意向<br>组建联合项目组</div>
+</div>
+<div style="background:var(--card);border:1px solid var(--blue);border-radius:12px;padding:24px 32px;text-align:center;min-width:200px">
+<div style="font-size:32px;margin-bottom:8px">🔍</div>
+<div style="font-size:16px;font-weight:600;margin-bottom:4px">Step 2</div>
+<div style="font-size:14px;color:var(--gray)">深度业务调研<br>定制实施方案</div>
+</div>
+<div style="background:var(--card);border:1px solid #44bb88;border-radius:12px;padding:24px 32px;text-align:center;min-width:200px">
+<div style="font-size:32px;margin-bottom:8px">🚀</div>
+<div style="font-size:16px;font-weight:600;margin-bottom:4px">Step 3</div>
+<div style="font-size:14px;color:var(--gray)">启动FDE交付<br>10周见效落地</div>
+</div>
+</div>
+<div class="fade-up" style="margin-top:20px">
+<a href="demo.html" class="demo-btn" style="font-size:18px;padding:14px 40px">🚀 体验在线Demo</a>
+</div>
+<div class="quote-bar fade-up" style="margin-top:40px;font-size:18px;border:none">"设计、品质、服务" —— 睿森服饰的数字化承诺</div>
+<p class="cover-footer fade-up">广州睿森服饰有限公司 × 钉钉 × 通义千问 ｜ 2026年7月</p>
+</div>
+</section>
+
+<script>
+// Navigation dots
+const sections=document.querySelectorAll('section');
+const nav=document.getElementById('navDots');
+sections.forEach((s,i)=>{const a=document.createElement('a');a.href='#'+s.id;a.dataset.idx=i;nav.appendChild(a)});
+function updateDots(){const st=document.documentElement.scrollTop||document.body.scrollTop;const vh=window.innerHeight;let idx=Math.round(st/vh);idx=Math.max(0,Math.min(idx,sections.length-1));document.querySelectorAll('.nav-dots a').forEach((a,i)=>{a.classList.toggle('active',i===idx)})}
+window.addEventListener('scroll',updateDots,{passive:true});
+updateDots();
+// Fade-up observer
+const obs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')})},{threshold:0.15});
+document.querySelectorAll('.fade-up').forEach(el=>obs.observe(el));
+// Keyboard nav
+document.addEventListener('keydown',e=>{const vh=window.innerHeight;const cur=Math.round((document.documentElement.scrollTop||document.body.scrollTop)/vh);if(e.key==='ArrowDown'||e.key==='PageDown'){e.preventDefault();const next=Math.min(cur+1,sections.length-1);sections[next].scrollIntoView({behavior:'smooth'})}else if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();const prev=Math.max(cur-1,0);sections[prev].scrollIntoView({behavior:'smooth'})}});
+</script>
+</body>
+</html>
