@@ -3,547 +3,402 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>睿森服饰智慧运营平台 - NOTHOMME</title>
+<title>睿森服饰智慧运营平台 - 交互式Demo V2</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{--green:#2d5016;--blue:#0066CC;--dark:#333333;--white:#FFFFFF;--bg:#f4f6f8;--card:#fff;--border:#e0e0e0;--shadow:0 2px 12px rgba(0,0,0,.08);--radius:10px;}
-body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--bg);color:var(--dark);line-height:1.6;font-size:14px;}
-.app-header{background:linear-gradient(135deg,var(--green),#1a3a0a);color:var(--white);padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100;}
-.app-header h1{font-size:20px;font-weight:700;letter-spacing:1px;}
-.app-header .brand-tag{font-size:12px;background:rgba(255,255,255,.2);padding:2px 10px;border-radius:20px;margin-left:12px;}
-.app-header .user-info{font-size:13px;opacity:.9;}
-.nav-bar{background:var(--white);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;position:sticky;top:60px;z-index:99;}
-.nav-bar button{flex-shrink:0;padding:14px 24px;border:none;background:none;font-size:14px;color:#666;cursor:pointer;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;}
-.nav-bar button:hover{color:var(--green);background:#f0f7ec;}
-.nav-bar button.active{color:var(--green);border-bottom-color:var(--green);font-weight:600;}
-.main-content{max-width:1400px;margin:0 auto;padding:20px;}
-.module{display:none;}
-.module.active{display:block;}
-/* Cards */
-.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-bottom:24px;}
-.kpi-card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
-.kpi-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--green);}
-.kpi-card.blue::before{background:var(--blue);}
-.kpi-card .kpi-label{font-size:13px;color:#888;margin-bottom:6px;}
-.kpi-card .kpi-value{font-size:28px;font-weight:700;color:var(--dark);}
-.kpi-card .kpi-sub{font-size:12px;color:#999;margin-top:4px;}
-.kpi-card .kpi-trend{font-size:12px;margin-top:4px;}
-.kpi-card .kpi-trend.up{color:#2d5016;}
-.kpi-card .kpi-trend.down{color:#cc3300;}
-/* Charts area */
-.charts-row{display:grid;grid-template-columns:2fr 1fr;gap:16px;margin-bottom:24px;}
-.chart-card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);}
-.chart-card h3{font-size:15px;margin-bottom:16px;color:var(--dark);border-left:3px solid var(--green);padding-left:10px;}
-/* CSS Bar Chart */
-.bar-chart{display:flex;align-items:flex-end;gap:12px;height:180px;padding-top:10px;}
-.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;}
-.bar-col .bar{width:100%;border-radius:4px 4px 0 0;background:linear-gradient(180deg,var(--green),#4a7a2e);transition:height .6s ease;min-height:4px;position:relative;}
-.bar-col .bar:hover{opacity:.85;}
-.bar-col .bar .bar-val{position:absolute;top:-20px;left:50%;transform:translateX(-50%);font-size:11px;color:var(--dark);white-space:nowrap;}
-.bar-col .bar-label{font-size:11px;color:#888;}
-/* SVG Pie */
-.pie-wrap{display:flex;align-items:center;justify-content:center;gap:20px;}
-.pie-legend{font-size:12px;line-height:2;}
-.pie-legend span{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:middle;}
-/* Alerts */
-.alert-bar{background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);display:flex;gap:12px;overflow-x:auto;}
-.alert-item{flex-shrink:0;display:flex;align-items:center;gap:8px;padding:8px 16px;border-radius:8px;font-size:13px;white-space:nowrap;}
-.alert-item.warn{background:#fff7e6;color:#b35c00;border:1px solid #ffe0b2;}
-.alert-item.danger{background:#fff0f0;color:#cc3300;border:1px solid #ffcdd2;}
-.alert-item.info{background:#e8f4fd;color:var(--blue);border:1px solid #bbdefb;}
-/* Tabs inside modules */
-.inner-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
-.inner-tabs button{padding:8px 20px;border:1px solid var(--border);border-radius:20px;background:var(--white);cursor:pointer;font-size:13px;transition:all .2s;}
-.inner-tabs button.active{background:var(--green);color:var(--white);border-color:var(--green);}
-/* Table */
-.data-table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);}
-.data-table th{background:#f8faf8;padding:12px 16px;text-align:left;font-size:13px;color:#666;border-bottom:1px solid var(--border);}
-.data-table td{padding:12px 16px;font-size:13px;border-bottom:1px solid #f0f0f0;}
-.data-table tr:last-child td{border-bottom:none;}
-.data-table tr:hover td{background:#fafcf8;}
-.status-tag{display:inline-block;padding:2px 10px;border-radius:12px;font-size:12px;}
-.status-tag.on{background:#e8f5e9;color:#2d5016;}
-.status-tag.off{background:#f5f5f5;color:#999;}
-.btn{padding:8px 20px;border:none;border-radius:6px;cursor:pointer;font-size:13px;transition:all .2s;}
-.btn-primary{background:var(--green);color:var(--white);}
-.btn-primary:hover{background:#1a3a0a;}
-.btn-blue{background:var(--blue);color:var(--white);}
-.btn-blue:hover{background:#004c99;}
-.btn-outline{border:1px solid var(--border);background:var(--white);color:var(--dark);}
-.btn-outline:hover{border-color:var(--green);color:var(--green);}
-.btn-sm{padding:4px 12px;font-size:12px;}
-.sync-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;}
-/* Modal */
-.modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.4);z-index:200;align-items:center;justify-content:center;}
-.modal-overlay.show{display:flex;}
-.modal{background:var(--white);border-radius:12px;padding:28px;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;box-shadow:0 8px 32px rgba(0,0,0,.2);}
-.modal h3{margin-bottom:16px;color:var(--green);}
-.modal .close-modal{float:right;background:none;border:none;font-size:20px;cursor:pointer;color:#999;}
-/* AI Chat */
-.chat-container{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column;height:calc(100vh - 200px);min-height:500px;}
-.chat-messages{flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:12px;}
-.chat-msg{max-width:80%;padding:12px 16px;border-radius:12px;font-size:14px;line-height:1.6;animation:fadeIn .3s;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
-.chat-msg.ai{background:#f0f7ec;color:var(--dark);align-self:flex-start;border-bottom-left-radius:4px;}
-.chat-msg.user{background:var(--blue);color:var(--white);align-self:flex-end;border-bottom-right-radius:4px;}
-.chat-input-area{padding:16px;border-top:1px solid var(--border);display:flex;gap:10px;flex-wrap:wrap;}
-.chat-input-area input{flex:1;min-width:200px;padding:10px 16px;border:1px solid var(--border);border-radius:8px;font-size:14px;outline:none;}
-.chat-input-area input:focus{border-color:var(--green);}
-.quick-questions{display:flex;gap:8px;flex-wrap:wrap;padding:0 16px 12px;}
-.quick-q{padding:6px 14px;background:#f0f7ec;border:1px solid #d4e8c8;border-radius:16px;font-size:12px;cursor:pointer;color:var(--green);transition:all .2s;}
-.quick-q:hover{background:var(--green);color:var(--white);}
-/* Customer Service */
-.cs-list{display:flex;flex-direction:column;gap:12px;}
-.cs-item{background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);border-left:4px solid var(--border);}
-.cs-item.emotion-happy{border-left-color:var(--green);}
-.cs-item.emotion-neutral{border-left-color:#f0ad4e;}
-.cs-item.emotion-unhappy{border-left-color:#cc3300;}
-.cs-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;}
-.cs-customer{font-weight:600;font-size:14px;}
-.cs-emotion{font-size:12px;padding:2px 10px;border-radius:12px;}
-.cs-emotion.happy{background:#e8f5e9;color:#2d5016;}
-.cs-emotion.neutral{background:#fff7e6;color:#b35c00;}
-.cs-emotion.unhappy{background:#fff0f0;color:#cc3300;}
-.cs-message{font-size:14px;color:#555;margin-bottom:10px;padding:10px;background:#f9f9f9;border-radius:8px;}
-.cs-ai-reply{background:#f0f7ec;border:1px dashed #b8d4a8;border-radius:8px;padding:12px;margin-bottom:10px;}
-.cs-ai-reply .ai-label{font-size:11px;color:var(--green);font-weight:600;margin-bottom:4px;}
-.cs-ai-reply p{font-size:13px;color:#444;}
-.cs-actions{display:flex;gap:8px;}
-/* Test Panel */
-.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px;}
-.test-card{background:var(--card);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);}
-.test-card h4{font-size:15px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;}
-.test-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px;}
-.test-metric{text-align:center;padding:8px;background:#f8faf8;border-radius:6px;}
-.test-metric .tm-val{font-size:16px;font-weight:700;color:var(--dark);}
-.test-metric .tm-label{font-size:11px;color:#888;}
-.decision-tag{display:inline-block;padding:4px 14px;border-radius:14px;font-size:12px;font-weight:600;}
-.decision-tag.go{background:#e8f5e9;color:#2d5016;}
-.decision-tag.adjust{background:#fff7e6;color:#b35c00;}
-.decision-tag.drop{background:#fff0f0;color:#cc3300;}
-.competitor-card{margin-top:12px;padding:10px;background:#f9f9f9;border-radius:8px;font-size:12px;color:#666;}
-.competitor-card strong{color:var(--dark);}
-/* Toast */
-.toast{position:fixed;top:80px;right:20px;background:var(--green);color:var(--white);padding:12px 24px;border-radius:8px;font-size:14px;z-index:300;opacity:0;transform:translateX(40px);transition:all .3s;pointer-events:none;}
-.toast.show{opacity:1;transform:translateX(0);}
-/* Responsive */
-@media(max-width:768px){
-  .charts-row{grid-template-columns:1fr;}
-  .kpi-grid{grid-template-columns:repeat(2,1fr);}
-  .nav-bar button{padding:12px 16px;font-size:13px;}
-  .main-content{padding:12px;}
-  .test-grid{grid-template-columns:1fr;}
-  .pie-wrap{flex-direction:column;}
-}
-@media(max-width:480px){
-  .kpi-grid{grid-template-columns:1fr;}
-  .app-header h1{font-size:16px;}
-  .app-header .brand-tag{display:none;}
-}
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--green:#2d5016;--blue:#0066CC;--dark:#333;--light:#f5f7fa;--white:#fff;--border:#e0e4e8;--shadow:0 2px 12px rgba(0,0,0,.08);--radius:10px}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:var(--light);color:var(--dark);line-height:1.6;min-height:100vh}
+.header{background:linear-gradient(135deg,var(--green),#1a3a0a);color:var(--white);padding:16px 32px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.header h1{font-size:20px;font-weight:600;letter-spacing:1px}
+.header .sub{font-size:12px;opacity:.8;margin-top:2px}
+.header-right{display:flex;align-items:center;gap:16px;font-size:13px}
+.header-right .badge{background:rgba(255,255,255,.2);padding:4px 12px;border-radius:20px;font-size:12px}
+.tabs{display:flex;background:var(--white);border-bottom:1px solid var(--border);padding:0 32px;overflow-x:auto;position:sticky;top:60px;z-index:99}
+.tab{padding:14px 24px;cursor:pointer;font-size:14px;font-weight:500;color:#666;border-bottom:3px solid transparent;transition:all .2s;white-space:nowrap;user-select:none}
+.tab:hover{color:var(--green)}.tab.active{color:var(--green);border-bottom-color:var(--green);font-weight:600}
+.main{padding:24px 32px;max-width:1400px;margin:0 auto}
+.panel{display:none;animation:fadeIn .3s ease}.panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:24px}
+.card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border-left:4px solid var(--green)}
+.card.blue{border-left-color:var(--blue)}.card.orange{border-left-color:#e67e22}.card.red{border-left-color:#c0392b}
+.card .label{font-size:13px;color:#888;margin-bottom:6px}
+.card .value{font-size:28px;font-weight:700;color:var(--dark)}
+.card .trend{font-size:12px;margin-top:4px}.card .trend.up{color:#27ae60}.card .trend.down{color:#c0392b}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.chart-box{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.chart-box h3{font-size:15px;margin-bottom:16px;color:var(--dark)}
+.bar-chart{display:flex;align-items:flex-end;gap:12px;height:180px;padding-top:10px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px}
+.bar{width:100%;border-radius:6px 6px 0 0;background:linear-gradient(180deg,var(--green),#4a7a2e);transition:height .6s ease;position:relative;min-height:4px}
+.bar:hover{opacity:.85}.bar-val{font-size:11px;color:#666;font-weight:600}.bar-label{font-size:11px;color:#999}
+.pie-wrap{display:flex;align-items:center;justify-content:center;gap:30px}
+.pie-legend{display:flex;flex-direction:column;gap:8px}
+.pie-legend-item{display:flex;align-items:center;gap:8px;font-size:13px}
+.pie-legend-dot{width:12px;height:12px;border-radius:3px}
+.alert-bar{background:var(--white);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);margin-bottom:24px}
+.alert-bar h3{font-size:15px;margin-bottom:12px}
+.alert-list{display:flex;flex-direction:column;gap:8px}
+.alert-item{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:6px;font-size:13px;background:#fef9e7;border-left:3px solid #f39c12}
+.alert-item.danger{background:#fdedec;border-left-color:#c0392b}
+.alert-item.info{background:#eaf2f8;border-left-color:var(--blue)}
+.alert-time{font-size:11px;color:#999;margin-left:auto;white-space:nowrap}
+.city-board{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+.city-card{background:var(--white);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);text-align:center;position:relative;overflow:hidden}
+.city-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.city-card.gz::before{background:var(--green)}.city-card.hz::before{background:var(--blue)}
+.city-card .city-name{font-size:18px;font-weight:700;margin-bottom:12px}
+.city-card.gz .city-name{color:var(--green)}.city-card.hz .city-name{color:var(--blue)}
+.city-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.city-stat .num{font-size:24px;font-weight:700}.city-stat .lbl{font-size:12px;color:#888}
+.city-link{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px;font-size:14px;color:#888}
+.city-link .arrow{font-size:20px;color:var(--green);animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:.4}50%{opacity:1}}
+.approval-list{display:flex;flex-direction:column;gap:12px;margin-bottom:24px}
+.approval-item{background:var(--white);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.approval-tag{padding:3px 10px;border-radius:4px;font-size:12px;font-weight:600;white-space:nowrap}
+.tag-gz{background:#e8f5e9;color:var(--green)}.tag-hz{background:#e3f2fd;color:var(--blue)}
+.tag-pending{background:#fff3e0;color:#e67e22}.tag-done{background:#e8f5e9;color:#27ae60}.tag-reject{background:#fdedec;color:#c0392b}
+.approval-info{flex:1;min-width:200px}
+.approval-title{font-size:14px;font-weight:600}.approval-meta{font-size:12px;color:#888;margin-top:2px}
+.ai-opinion{font-size:12px;color:var(--blue);margin-top:4px;display:flex;align-items:center;gap:4px}
+.btn{padding:6px 16px;border:none;border-radius:6px;cursor:pointer;font-size:13px;font-weight:500;transition:all .2s}
+.btn-primary{background:var(--blue);color:var(--white)}.btn-primary:hover{background:#0055aa}
+.btn-outline{border:1px solid var(--border);background:var(--white);color:var(--dark)}.btn-outline:hover{border-color:var(--blue);color:var(--blue)}
+.btn-sm{padding:4px 12px;font-size:12px}
+.report-preview{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border:1px dashed var(--border)}
+.report-preview h3{font-size:15px;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.report-content{font-size:13px;color:#555;line-height:1.8}.report-content strong{color:var(--dark)}
+.ch-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap}
+.ch-tab{padding:6px 16px;border-radius:20px;font-size:13px;cursor:pointer;border:1px solid var(--border);background:var(--white);transition:all .2s}
+.ch-tab.active{background:var(--green);color:var(--white);border-color:var(--green)}
+.sku-table{width:100%;border-collapse:collapse;background:var(--white);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)}
+.sku-table th{background:#f8f9fa;padding:12px 16px;text-align:left;font-size:13px;font-weight:600;color:#666;border-bottom:1px solid var(--border)}
+.sku-table td{padding:12px 16px;font-size:13px;border-bottom:1px solid #f0f0f0}
+.sku-table tr:last-child td{border-bottom:none}
+.status-dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px}
+.status-on{background:#27ae60}.status-off{background:#ccc}
+.sync-bar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px}
+.chat-container{display:grid;grid-template-columns:280px 1fr;gap:20px;height:500px}
+.chat-sidebar{background:var(--white);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);overflow-y:auto}
+.chat-sidebar h4{font-size:14px;margin-bottom:12px;color:#888}
+.quick-q{padding:10px 12px;border-radius:8px;font-size:13px;cursor:pointer;margin-bottom:8px;background:#f8f9fa;transition:all .2s;border:1px solid transparent}
+.quick-q:hover{border-color:var(--green);background:#f0f7ec}
+.chat-main{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.chat-messages{flex:1;overflow-y:auto;margin-bottom:16px;display:flex;flex-direction:column;gap:12px}
+.msg{max-width:80%;padding:12px 16px;border-radius:12px;font-size:14px;line-height:1.6}
+.msg.bot{background:#f0f7ec;color:var(--dark);align-self:flex-start;border-bottom-left-radius:4px}
+.msg.user{background:var(--blue);color:var(--white);align-self:flex-end;border-bottom-right-radius:4px}
+.chat-input{display:flex;gap:8px}
+.chat-input input{flex:1;padding:10px 16px;border:1px solid var(--border);border-radius:8px;font-size:14px;outline:none}
+.chat-input input:focus{border-color:var(--green)}
+.cs-list{display:flex;flex-direction:column;gap:12px}
+.cs-item{background:var(--white);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);display:flex;gap:16px;align-items:flex-start}
+.cs-avatar{width:40px;height:40px;border-radius:50%;background:var(--blue);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;flex-shrink:0}
+.cs-body{flex:1}
+.cs-header{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.cs-name{font-size:14px;font-weight:600}
+.cs-emotion{padding:2px 8px;border-radius:10px;font-size:11px;font-weight:600}
+.emotion-ok{background:#e8f5e9;color:#27ae60}.emotion-warn{background:#fff3e0;color:#e67e22}.emotion-bad{background:#fdedec;color:#c0392b}
+.cs-question{font-size:13px;color:#555;margin-bottom:8px}
+.cs-ai{background:#f0f7ec;border-radius:8px;padding:10px 14px;font-size:13px;color:var(--dark);margin-bottom:8px;border-left:3px solid var(--green)}
+.cs-actions{display:flex;gap:8px}
+.test-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:16px}
+.test-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow)}
+.test-card h4{font-size:15px;margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.test-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px}
+.test-metric{text-align:center;padding:8px;background:#f8f9fa;border-radius:6px}
+.test-metric .v{font-size:18px;font-weight:700;color:var(--dark)}.test-metric .l{font-size:11px;color:#888}
+.test-decision{padding:8px 12px;border-radius:6px;font-size:13px;font-weight:600;text-align:center}
+.dec-go{background:#e8f5e9;color:#27ae60}.dec-adj{background:#fff3e0;color:#e67e22}.dec-stop{background:#fdedec;color:#c0392b}
+.compete-row{display:flex;justify-content:space-between;font-size:12px;color:#888;margin-top:8px;padding-top:8px;border-top:1px solid #f0f0f0}
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal{background:var(--white);border-radius:var(--radius);padding:24px;max-width:480px;width:90%;box-shadow:0 8px 32px rgba(0,0,0,.2)}
+.modal h3{font-size:16px;margin-bottom:16px}.modal p{font-size:14px;color:#555;margin-bottom:16px;line-height:1.7}
+.modal .btn-row{display:flex;gap:8px;justify-content:flex-end}
+.toast{position:fixed;top:80px;right:32px;background:var(--green);color:var(--white);padding:12px 24px;border-radius:8px;font-size:14px;z-index:300;transform:translateX(120%);transition:transform .3s ease;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.toast.show{transform:translateX(0)}
+@media(max-width:900px){.chart-row,.city-board,.chat-container{grid-template-columns:1fr}.main{padding:16px}.tabs{padding:0 16px}.header{padding:12px 16px}.card-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.card-grid{grid-template-columns:1fr}.test-grid{grid-template-columns:1fr}.approval-item{flex-direction:column;align-items:flex-start}}
 </style>
 </head>
 <body>
+<div class="header">
+  <div><h1>🏢 睿森服饰智慧运营平台</h1><div class="sub">NOTHOMME · Nothomme Blue · STAW | 广州↔杭州双城协同</div></div>
+  <div class="header-right"><span class="badge">📍 广州·供应链中心</span><span class="badge">👤 管理员</span><span id="clock" style="font-size:13px;opacity:.9"></span></div>
+</div>
+<div class="tabs" id="tabBar">
+  <div class="tab active" data-tab="dashboard">📊 驾驶舱首页</div>
+  <div class="tab" data-tab="collab">🌐 跨地域协同中心</div>
+  <div class="tab" data-tab="inventory">📦 全渠道库存管理</div>
+  <div class="tab" data-tab="ai-design">🎨 AI设计助手</div>
+  <div class="tab" data-tab="cs">💬 智能客服工作台</div>
+  <div class="tab" data-tab="test">📈 数据测款面板</div>
+</div>
+<div class="main">
 
-<header class="app-header">
-  <div style="display:flex;align-items:center;">
-    <h1>睿森服饰智慧运营平台</h1>
-    <span class="brand-tag">NOTHOMME 无感人</span>
+<!-- TAB 1: Dashboard -->
+<div class="panel active" id="panel-dashboard">
+  <div class="card-grid">
+    <div class="card"><div class="label">今日全渠道销量</div><div class="value">3,842</div><div class="trend up">↑ 12.5% 较昨日</div></div>
+    <div class="card blue"><div class="label">库存总值</div><div class="value">¥2,860万</div><div class="trend down">↓ 3.2% 库龄优化中</div></div>
+    <div class="card orange"><div class="label">AI客服接待量</div><div class="value">1,247</div><div class="trend up">↑ 自动解决率 78%</div></div>
+    <div class="card red"><div class="label">跨城审批待办</div><div class="value">6</div><div class="trend down">⚠ 2条超时预警</div></div>
   </div>
-  <div class="user-info">👤 管理员 · 张三</div>
-</header>
-
-<nav class="nav-bar" id="mainNav">
-  <button class="active" data-tab="dashboard">📊 驾驶舱首页</button>
-  <button data-tab="inventory">📦 全渠道库存</button>
-  <button data-tab="ai-design">🎨 AI设计助手</button>
-  <button data-tab="cs-workbench">💬 智能客服</button>
-  <button data-tab="test-panel">📈 数据测款</button>
-</nav>
-
-<div class="main-content">
-
-<!-- ==================== 驾驶舱首页 ==================== -->
-<div class="module active" id="mod-dashboard">
-  <div class="kpi-grid">
-    <div class="kpi-card">
-      <div class="kpi-label">今日销量（件）</div>
-      <div class="kpi-value">1,286</div>
-      <div class="kpi-trend up">↑ 12.3% 较昨日</div>
-    </div>
-    <div class="kpi-card blue">
-      <div class="kpi-label">全渠道库存总值</div>
-      <div class="kpi-value">¥3,842万</div>
-      <div class="kpi-sub">SKU总数：1,456</div>
-    </div>
-    <div class="kpi-card">
-      <div class="kpi-label">AI客服接待量</div>
-      <div class="kpi-value">3,672</div>
-      <div class="kpi-trend up">↑ 自动解决率 87%</div>
-    </div>
-    <div class="kpi-card blue">
-      <div class="kpi-label">本月设计上新</div>
-      <div class="kpi-value">24</div>
-      <div class="kpi-sub">在研款式：18</div>
-    </div>
+  <div class="chart-row">
+    <div class="chart-box"><h3>📊 近7日销售趋势（件）</h3><div class="bar-chart" id="barChart"></div></div>
+    <div class="chart-box"><h3>🥧 渠道销售占比</h3><div class="pie-wrap"><svg width="180" height="180" viewBox="0 0 180 180" id="pieSvg"></svg><div class="pie-legend" id="pieLegend"></div></div></div>
   </div>
-
-  <div class="charts-row">
-    <div class="chart-card">
-      <h3>近7日销售趋势</h3>
-      <div class="bar-chart" id="salesChart"></div>
-    </div>
-    <div class="chart-card">
-      <h3>渠道销售占比</h3>
-      <div class="pie-wrap">
-        <svg width="160" height="160" viewBox="0 0 160 160" id="pieChart"></svg>
-        <div class="pie-legend" id="pieLegend"></div>
-      </div>
-    </div>
-  </div>
-
   <div class="alert-bar">
-    <div class="alert-item warn">⚠️ 库存预警：山系冲锋衣-NH2401 库存低于安全值（剩余32件）</div>
-    <div class="alert-item danger">🔴 差评提醒：抖音店铺出现2条新差评，请及时处理</div>
-    <div class="alert-item info">📋 交期延误：供应商「老王制衣厂」秋季卫衣批次延迟3天</div>
-    <div class="alert-item warn">⚠️ 库存预警：工装裤-NH2388 得物渠道即将断码</div>
+    <h3>🔔 实时告警通知</h3>
+    <div class="alert-list">
+      <div class="alert-item danger"><span>⚠️ SKU-NH2403 山系夹克L码库存低于安全值（剩余23件）</span><span class="alert-time">5分钟前</span></div>
+      <div class="alert-item"><span>⭐ 抖音店铺新增2条差评，涉及尺码偏小问题</span><span class="alert-time">18分钟前</span></div>
+      <div class="alert-item danger"><span>🚚 供应商「东莞XX制衣」PO#20240815交期延误3天</span><span class="alert-time">32分钟前</span></div>
+      <div class="alert-item info"><span>📋 杭州→广州采购审批#AP2024-0892已超48小时未处理</span><span class="alert-time">1小时前</span></div>
+    </div>
   </div>
 </div>
 
-<!-- ==================== 全渠道库存管理 ==================== -->
-<div class="module" id="mod-inventory">
+<!-- TAB 2: Cross-region Collaboration -->
+<div class="panel" id="panel-collab">
+  <div class="city-link"><span class="arrow">⇄</span> 广州 ↔ 杭州 实时协同链路 · 延迟 &lt;15ms</div>
+  <div class="city-board">
+    <div class="city-card gz"><div class="city-name">🏭 广州·供应链中心</div><div class="city-stats"><div class="city-stat"><div class="num">42</div><div class="lbl">在线人数</div></div><div class="city-stat"><div class="num">18</div><div class="lbl">待办事项</div></div><div class="city-stat"><div class="num">156</div><div class="lbl">今日消息</div></div></div></div>
+    <div class="city-card hz"><div class="city-name">🏢 杭州·品牌总部</div><div class="city-stats"><div class="city-stat"><div class="num">89</div><div class="lbl">在线人数</div></div><div class="city-stat"><div class="num">24</div><div class="lbl">待办事项</div></div><div class="city-stat"><div class="num">312</div><div class="lbl">今日消息</div></div></div></div>
+  </div>
+  <div class="chart-box" style="margin-bottom:24px"><h3>📋 跨城审批流（实时）</h3><div class="approval-list" id="approvalList"></div></div>
+  <div class="report-preview">
+    <h3>📝 跨城日报 · AI自动生成预览 <button class="btn btn-sm btn-outline" onclick="showToast('日报已发送至双方负责人邮箱')">发送日报</button></h3>
+    <div class="report-content">
+      <strong>【2024-08-20 跨城协同日报】</strong><br><br>
+      📌 今日广州↔杭州共发起审批 <strong>12</strong> 件，已完成 <strong>8</strong> 件，平均处理时长 <strong>4.2小时</strong>。<br>
+      📌 采购部张三（广州）提交的<strong>秋季面料采购申请</strong>已由杭州李四审批通过，金额 ¥48.6万。<br>
+      📌 样品确认流程：NOTHOMME 24FW山系系列 <strong>3款</strong> 样品已从广州寄出，预计明日到达杭州评审。<br>
+      ⚠️ 超时预警：供应商评审#SR-2024-056已超48小时，请杭州老王尽快处理。<br>
+      📊 本日跨城消息量 <strong>468条</strong>，较昨日增长15%，主要集中在SKU同步与交期协调。
+    </div>
+  </div>
+</div>
+
+<!-- TAB 3: Inventory -->
+<div class="panel" id="panel-inventory">
   <div class="sync-bar">
-    <h2 style="font-size:18px;color:var(--dark);">全渠道库存管理</h2>
-    <div style="display:flex;gap:8px;">
-      <button class="btn btn-outline btn-sm" onclick="showRestockModal()">💡 智能补货建议</button>
-      <button class="btn btn-primary" onclick="syncInventory()">🔄 一键同步全渠道</button>
+    <div class="ch-tabs" id="channelTabs"></div>
+    <div style="display:flex;gap:8px">
+      <button class="btn btn-primary" onclick="showToast('✅ 全渠道库存已同步完成')">🔄 一键同步全渠道</button>
+      <button class="btn btn-outline" onclick="openModal()">💡 智能补货建议</button>
     </div>
   </div>
-  <div class="inner-tabs" id="channelTabs">
-    <button class="active" data-channel="taobao">淘宝旗舰店</button>
-    <button data-channel="douyin">抖音小店</button>
-    <button data-channel="dewu">得物</button>
-    <button data-channel="offline">线下门店</button>
-  </div>
-  <div id="inventoryTableWrap"></div>
+  <table class="sku-table"><thead><tr><th>SKU编码</th><th>商品名称</th><th>渠道</th><th>库存数量</th><th>在售状态</th><th>操作</th></tr></thead><tbody id="skuBody"></tbody></table>
 </div>
 
-<!-- ==================== AI设计助手 ==================== -->
-<div class="module" id="mod-ai-design">
+<!-- TAB 4: AI Design -->
+<div class="panel" id="panel-ai-design">
   <div class="chat-container">
-    <div class="chat-messages" id="chatMessages">
-      <div class="chat-msg ai">你好！我是NOTHOMME AI设计助手 🎨<br>我可以帮你生成款式灵感、推荐配色方案、分析爆款特征。请问有什么需要？</div>
+    <div class="chat-sidebar">
+      <h4>⚡ 快捷提问</h4>
+      <div class="quick-q" onclick="sendDesignMsg('生成山系户外夹克款式图')">🧥 生成山系户外夹克款式</div>
+      <div class="quick-q" onclick="sendDesignMsg('推荐2024秋季配色方案')">🎨 推荐秋季配色</div>
+      <div class="quick-q" onclick="sendDesignMsg('分析上周爆款特征')">📊 分析上周爆款特征</div>
+      <div class="quick-q" onclick="sendDesignMsg('NOTHOMME Blue蓝岐系列风格参考')">💙 蓝岐系列风格参考</div>
+      <div class="quick-q" onclick="sendDesignMsg('STAW街头潮流趋势分析')">🔥 STAW潮流趋势分析</div>
+      <div class="quick-q" onclick="sendDesignMsg('生成无感人基础款改良方案')">✨ 无感人基础款改良</div>
+      <h4 style="margin-top:16px">📁 历史对话</h4>
+      <div class="quick-q" style="opacity:.6">8/19 秋季新品企划讨论</div>
+      <div class="quick-q" style="opacity:.6">8/18 面料纹理生成记录</div>
     </div>
-    <div class="quick-questions">
-      <div class="quick-q" onclick="sendQuickQ(this)">生成山系户外夹克款式</div>
-      <div class="quick-q" onclick="sendQuickQ(this)">推荐秋季配色方案</div>
-      <div class="quick-q" onclick="sendQuickQ(this)">分析上周爆款特征</div>
-      <div class="quick-q" onclick="sendQuickQ(this)">当前流行面料趋势</div>
-      <div class="quick-q" onclick="sendQuickQ(this)">优化NH2401版型建议</div>
-    </div>
-    <div class="chat-input-area">
-      <input type="text" id="chatInput" placeholder="输入你的设计需求..." onkeydown="if(event.key==='Enter')sendChat()">
-      <button class="btn btn-primary" onclick="sendChat()">发送</button>
+    <div class="chat-main">
+      <div class="chat-messages" id="designChat"><div class="msg bot">👋 你好！我是睿森AI设计助手，可以帮你生成款式图、分析趋势、推荐配色。试试左侧的快捷提问吧！</div></div>
+      <div class="chat-input"><input type="text" id="designInput" placeholder="输入设计需求..." onkeydown="if(event.key==='Enter')sendDesignFromInput()"><button class="btn btn-primary" onclick="sendDesignFromInput()">发送</button></div>
     </div>
   </div>
 </div>
 
-<!-- ==================== 智能客服工作台 ==================== -->
-<div class="module" id="mod-cs-workbench">
-  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
-    <h2 style="font-size:18px;color:var(--dark);">智能客服工作台</h2>
-    <div style="font-size:13px;color:#888;">待处理：<strong style="color:var(--blue);">6</strong> 条 | 今日已处理：48 条</div>
+<!-- TAB 5: Customer Service -->
+<div class="panel" id="panel-cs">
+  <div class="card-grid" style="margin-bottom:20px">
+    <div class="card"><div class="label">待处理咨询</div><div class="value">7</div></div>
+    <div class="card blue"><div class="label">今日已处理</div><div class="value">86</div></div>
+    <div class="card orange"><div class="label">平均响应时间</div><div class="value">28s</div></div>
+    <div class="card"><div class="label">满意度</div><div class="value">96.2%</div></div>
   </div>
   <div class="cs-list" id="csList"></div>
 </div>
 
-<!-- ==================== 数据测款面板 ==================== -->
-<div class="module" id="mod-test-panel">
-  <div style="margin-bottom:16px;">
-    <h2 style="font-size:18px;color:var(--dark);">新品数据测款面板</h2>
-    <p style="font-size:13px;color:#888;margin-top:4px;">基于小流量测试数据，AI自动生成放量/调整/淘汰决策建议</p>
-  </div>
+<!-- TAB 6: Test Panel -->
+<div class="panel" id="panel-test">
+  <div class="chart-box" style="margin-bottom:20px"><h3>🧪 2024秋季新品测款看板</h3><p style="font-size:13px;color:#888">基于抖音/淘宝/得物三渠道7日测试数据，AI综合评估后给出决策建议</p></div>
   <div class="test-grid" id="testGrid"></div>
 </div>
 
-</div><!-- /main-content -->
+</div><!-- end .main -->
 
-<!-- Modal: 智能补货建议 -->
-<div class="modal-overlay" id="restockModal">
+<!-- Modal -->
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
-    <button class="close-modal" onclick="closeModal('restockModal')">&times;</button>
-    <h3>💡 智能补货建议</h3>
-    <p style="font-size:13px;color:#666;margin-bottom:16px;">基于近30日销售速率与当前库存，AI为您推荐以下补货计划：</p>
-    <table class="data-table" style="font-size:13px;">
-      <thead><tr><th>SKU</th><th>当前库存</th><th>日均销量</th><th>建议补货</th><th>紧急度</th></tr></thead>
-      <tbody>
-        <tr><td>NH2401 山系冲锋衣</td><td>32</td><td>18</td><td style="color:var(--green);font-weight:600;">200件</td><td><span class="decision-tag drop">紧急</span></td></tr>
-        <tr><td>NH2388 工装裤</td><td>56</td><td>12</td><td style="color:var(--green);font-weight:600;">150件</td><td><span class="decision-tag adjust">中等</span></td></tr>
-        <tr><td>NH2415 摇粒绒外套</td><td>89</td><td>8</td><td style="color:var(--green);font-weight:600;">100件</td><td><span class="decision-tag go">一般</span></td></tr>
-      </tbody>
-    </table>
-    <div style="margin-top:16px;text-align:right;">
-      <button class="btn btn-outline btn-sm" onclick="closeModal('restockModal')">关闭</button>
-      <button class="btn btn-primary btn-sm" onclick="showToast('补货工单已生成，已发送至供应商');closeModal('restockModal')">生成补货工单</button>
-    </div>
+    <h3>💡 AI智能补货建议</h3>
+    <p>根据近7日销售速率与当前库存水位分析：<br><br>🔴 <strong>紧急补货：</strong>SKU-NH2403 山系夹克L码，预计3天内断货，建议从广州仓调拨200件至杭州发货仓。<br><br>🟡 <strong>建议补货：</strong>SKU-NB2401 蓝岐工装裤M码，日均销35件，当前库存可支撑8天，建议向供应商追加300件订单。<br><br>🟢 <strong>库存健康：</strong>其余SKU库存水位正常，无需调整。</p>
+    <div class="btn-row"><button class="btn btn-outline" onclick="closeModal()">关闭</button><button class="btn btn-primary" onclick="closeModal();showToast('✅ 补货指令已下发至SCM系统')">确认执行</button></div>
   </div>
 </div>
-
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
 <script>
+// Clock
+function updateClock(){const d=new Date();document.getElementById('clock').textContent=d.toLocaleString('zh-CN',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit'})}
+setInterval(updateClock,1000);updateClock();
 
-// ===== Tab Navigation =====
-document.querySelectorAll('#mainNav button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#mainNav button').forEach(b => b.classList.remove('active'));
-    document.querySelectorAll('.module').forEach(m => m.classList.remove('active'));
-    btn.classList.add('active');
-    document.getElementById('mod-' + btn.dataset.tab).classList.add('active');
+// Tab switching
+document.querySelectorAll('.tab').forEach(t=>{t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById('panel-'+t.dataset.tab).classList.add('active');
+})});
+
+// Toast
+function showToast(msg){const el=document.getElementById('toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),2500)}
+
+// Modal
+function openModal(){document.getElementById('modalOverlay').classList.add('show')}
+function closeModal(){document.getElementById('modalOverlay').classList.remove('show')}
+
+// Bar Chart
+(function(){
+  const data=[{d:'8/14',v:3210},{d:'8/15',v:3580},{d:'8/16',v:4120},{d:'8/17',v:3890},{d:'8/18',v:3450},{d:'8/19',v:3842},{d:'8/20',v:3650}];
+  const max=Math.max(...data.map(x=>x.v));
+  const c=document.getElementById('barChart');
+  data.forEach(x=>{
+    const pct=(x.v/max*100).toFixed(0);
+    c.innerHTML+='<div class="bar-col"><div class="bar-val">'+x.v+'</div><div class="bar" style="height:'+pct+'%"></div><div class="bar-label">'+x.d+'</div></div>';
   });
-});
+})();
 
-// ===== Toast =====
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
+// Pie Chart
+(function(){
+  const data=[{name:'淘宝',pct:35,color:'#2d5016'},{name:'抖音',pct:28,color:'#0066CC'},{name:'得物',pct:18,color:'#e67e22'},{name:'京东',pct:12,color:'#8e44ad'},{name:'线下店',pct:7,color:'#95a5a6'}];
+  let cum=0;const r=70,cx=90,cy=90;
+  const svg=document.getElementById('pieSvg');
+  const legend=document.getElementById('pieLegend');
+  data.forEach(d=>{
+    const start=cum/100*2*Math.PI-Math.PI/2;cum+=d.pct;
+    const end=cum/100*2*Math.PI-Math.PI/2;
+    const large=d.pct>50?1:0;
+    const x1=cx+r*Math.cos(start),y1=cy+r*Math.sin(start);
+    const x2=cx+r*Math.cos(end),y2=cy+r*Math.sin(end);
+    svg.innerHTML+='<path d="M'+cx+','+cy+' L'+x1+','+y1+' A'+r+','+r+' 0 '+large+' 1 '+x2+','+y2+' Z" fill="'+d.color+'" stroke="#fff" stroke-width="2"/>';
+    legend.innerHTML+='<div class="pie-legend-item"><div class="pie-legend-dot" style="background:'+d.color+'"></div>'+d.name+' '+d.pct+'%</div>';
+  });
+})();
 
-// ===== Dashboard: Bar Chart =====
-(function() {
-  const data = [
-    { label: '周一', val: 980 },
-    { label: '周二', val: 1120 },
-    { label: '周三', val: 1050 },
-    { label: '周四', val: 1340 },
-    { label: '周五', val: 1286 },
-    { label: '周六', val: 1520 },
-    { label: '周日', val: 1410 }
+// Approval List
+(function(){
+  const approvals=[
+    {id:'AP2024-0892',title:'秋季面料采购申请',type:'采购申请',from:'广州·张三',to:'杭州·李四',status:'pending',time:'48h+',ai:'✅ AI预审通过：预算范围内，供应商资质合格'},
+    {id:'AP2024-0895',title:'NOTHOMME 24FW样品确认',type:'样品确认',from:'广州·老王',to:'杭州·老李',status:'pending',time:'12h',ai:'✅ AI预审通过：样品检测报告齐全'},
+    {id:'AP2024-0898',title:'供应商年度评审-东莞XX制衣',type:'供应商评审',from:'杭州·老王',to:'广州·张三',status:'pending',time:'52h',ai:'⚠️ AI提醒：该供应商上季交期达成率仅82%，建议重点评估'},
+    {id:'AP2024-0901',title:'Q3营销费用追加申请',type:'费用报销',from:'杭州·老李',to:'广州·老王',status:'done',time:'3.5h',ai:'✅ AI预审通过：金额符合Q3预算调整范围'},
+    {id:'AP2024-0903',title:'STAW联名款打样费审批',type:'费用报销',from:'广州·张三',to:'杭州·李四',status:'done',time:'2h',ai:'✅ AI预审通过：联名项目已立项'},
+    {id:'AP2024-0905',title:'Nothomme Blue新季企划书审批',type:'采购申请',from:'杭州·老李',to:'广州·老王',status:'pending',time:'6h',ai:'📋 AI分析：企划涉及12个SKU，预估首单量4,200件'},
+    {id:'AP2024-0907',title:'广州仓→杭州仓调拨申请',type:'采购申请',from:'广州·老王',to:'杭州·张三',status:'reject',time:'1.5h',ai:'❌ AI驳回：调拨数量超出安全库存阈值，请调整后重新提交'}
   ];
-  const max = Math.max(...data.map(d => d.val));
-  const chart = document.getElementById('salesChart');
-  data.forEach(d => {
-    const pct = (d.val / max * 100).toFixed(0);
-    chart.innerHTML += `<div class="bar-col"><div class="bar" style="height:${pct}%"><span class="bar-val">${d.val}</span></div><span class="bar-label">${d.label}</span></div>`;
+  const container=document.getElementById('approvalList');
+  approvals.forEach(a=>{
+    const fromCity=a.from.startsWith('广州')?'tag-gz':'tag-hz';
+    const statusMap={pending:['待审批','tag-pending'],done:['已通过','tag-done'],reject:['已驳回','tag-reject']};
+    const [sLabel,sClass]=statusMap[a.status];
+    const btnHtml=a.status==='pending'?'<button class="btn btn-sm btn-primary" onclick="showToast(\'已发送催办通知给'+a.to+'\')">⏰ 催办</button>':'';
+    container.innerHTML+='<div class="approval-item"><span class="approval-tag '+fromCity+'">'+a.from.split('·')[0]+'</span><span class="approval-tag '+sClass+'">'+sLabel+'</span><div class="approval-info"><div class="approval-title">'+a.title+' <span style="font-size:11px;color:#aaa">#'+a.id+'</span></div><div class="approval-meta">'+a.type+' | '+a.from+' → '+a.to+' | 耗时: '+a.time+'</div><div class="ai-opinion">🤖 '+a.ai+'</div></div>'+btnHtml+'</div>';
   });
 })();
 
-// ===== Dashboard: Pie Chart =====
-(function() {
-  const data = [
-    { label: '淘宝', pct: 35, color: '#2d5016' },
-    { label: '抖音', pct: 28, color: '#0066CC' },
-    { label: '得物', pct: 22, color: '#f0ad4e' },
-    { label: '线下', pct: 15, color: '#999' }
-  ];
-  const svg = document.getElementById('pieChart');
-  const legend = document.getElementById('pieLegend');
-  let cumAngle = 0;
-  const cx = 80, cy = 80, r = 70;
-  data.forEach(d => {
-    const startAngle = cumAngle;
-    const endAngle = cumAngle + (d.pct / 100) * 360;
-    const largeArc = (endAngle - startAngle > 180) ? 1 : 0;
-    const x1 = cx + r * Math.cos((startAngle - 90) * Math.PI / 180);
-    const y1 = cy + r * Math.sin((startAngle - 90) * Math.PI / 180);
-    const x2 = cx + r * Math.cos((endAngle - 90) * Math.PI / 180);
-    const y2 = cy + r * Math.sin((endAngle - 90) * Math.PI / 180);
-    const path = `M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z`;
-    svg.innerHTML += `<path d="${path}" fill="${d.color}" opacity="0.85"><title>${d.label} ${d.pct}%</title></path>`;
-    cumAngle = endAngle;
-    legend.innerHTML += `<div><span style="background:${d.color}"></span>${d.label} ${d.pct}%</div>`;
-  });
-})();
-
-// ===== Inventory Module =====
-const inventoryData = {
-  taobao: [
-    { sku: 'NH2401', name: '山系冲锋衣-墨绿', stock: 32, status: 'on' },
-    { sku: 'NH2402', name: '山系冲锋衣-卡其', stock: 128, status: 'on' },
-    { sku: 'NH2388', name: '多口袋工装裤', stock: 56, status: 'on' },
-    { sku: 'NH2415', name: '摇粒绒保暖外套', stock: 89, status: 'on' },
-    { sku: 'NH2399', name: '速干徒步T恤', stock: 0, status: 'off' },
-    { sku: 'NH2420', name: '防泼水短裤', stock: 210, status: 'on' }
-  ],
-  douyin: [
-    { sku: 'NH2401', name: '山系冲锋衣-墨绿', stock: 18, status: 'on' },
-    { sku: 'NH2403', name: '山系冲锋衣-黑色', stock: 95, status: 'on' },
-    { sku: 'NH2410', name: '户外软壳裤', stock: 142, status: 'on' },
-    { sku: 'NH2415', name: '摇粒绒保暖外套', stock: 67, status: 'on' },
-    { sku: 'NH2422', name: '露营风卫衣', stock: 230, status: 'on' }
-  ],
-  dewu: [
-    { sku: 'NH2401', name: '山系冲锋衣-墨绿', stock: 45, status: 'on' },
-    { sku: 'NH2402', name: '山系冲锋衣-卡其', stock: 38, status: 'on' },
-    { sku: 'NH2388', name: '多口袋工装裤', stock: 12, status: 'on' },
-    { sku: 'NH2430', name: '机能风马甲', stock: 76, status: 'on' }
-  ],
-  offline: [
-    { sku: 'NH2401', name: '山系冲锋衣-墨绿', stock: 24, status: 'on' },
-    { sku: 'NH2402', name: '山系冲锋衣-卡其', stock: 30, status: 'on' },
-    { sku: 'NH2388', name: '多口袋工装裤', stock: 18, status: 'on' },
-    { sku: 'NH2415', name: '摇粒绒保暖外套', stock: 42, status: 'on' },
-    { sku: 'NH2420', name: '防泼水短裤', stock: 55, status: 'on' },
-    { sku: 'NH2422', name: '露营风卫衣', stock: 36, status: 'on' },
-    { sku: 'NH2430', name: '机能风马甲', stock: 28, status: 'on' }
-  ]
-};
-
-function renderInventory(channel) {
-  const items = inventoryData[channel] || [];
-  let html = `<table class="data-table"><thead><tr><th>SKU编码</th><th>商品名称</th><th>库存数量</th><th>在售状态</th><th>操作</th></tr></thead><tbody>`;
-  items.forEach(item => {
-    const statusClass = item.status === 'on' ? 'on' : 'off';
-    const statusText = item.status === 'on' ? '在售' : '下架';
-    html += `<tr>
-      <td><code>${item.sku}</code></td>
-      <td>${item.name}</td>
-      <td style="font-weight:600;${item.stock < 30 ? 'color:#cc3300;' : ''}">${item.stock}</td>
-      <td><span class="status-tag ${statusClass}">${statusText}</span></td>
-      <td><button class="btn btn-outline btn-sm" onclick="showToast('已查看 ${item.sku} 详情')">详情</button></td>
-    </tr>`;
-  });
-  html += '</tbody></table>';
-  document.getElementById('inventoryTableWrap').innerHTML = html;
-}
-
-document.querySelectorAll('#channelTabs button').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('#channelTabs button').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderInventory(btn.dataset.channel);
-  });
-});
-renderInventory('taobao');
-
-function syncInventory() {
-  showToast('✅ 全渠道库存同步成功！数据已更新至最新状态');
-}
-
-function showRestockModal() {
-  document.getElementById('restockModal').classList.add('show');
-}
-function closeModal(id) {
-  document.getElementById(id).classList.remove('show');
-}
-document.getElementById('restockModal').addEventListener('click', function(e) {
-  if (e.target === this) closeModal('restockModal');
-});
-
-// ===== AI Design Chat =====
-const aiReplies = {
-  '生成山系户外夹克款式': '🎨 为您生成山系户外夹克设计方案：\n\n【款式】NH-X2401 山系三合一夹克\n【面料】外层：CORDURA®耐磨尼龙 + DWR防泼水处理\n内层：可拆卸POLARTEC®摇粒绒内胆\n【配色】苔藓绿/砂岩灰/深松绿 三色\n【设计亮点】\n• 立体剪裁肘部预弯设计\n• YKK防水拉链 + 磁吸门襟\n• 隐藏式风帽收纳系统\n• 胸前斜插袋+臂袋多功能分区\n\n已生成3组配色效果图，是否需要调整细节？',
-  '推荐秋季配色方案': '🎨 NOTHOMME 2024秋季推荐配色方案：\n\n【主色调】\n• 🟤 焦糖棕 #8B5E3C — 温暖大地色系\n• 🟢 苔藓绿 #4A6741 — 品牌核心色延续\n• 🔵 雾蓝灰 #6B8BA4 — 都市通勤线\n\n【点缀色】\n• 🟠 落日橘 #D4763A — 小面积提亮\n• ⚪ 燕麦白 #E8DFD0 — 内搭基础色\n\n以上配色已通过Pantone色彩趋势验证，与本季山系主题高度契合。需要应用到具体款式的色卡吗？',
-  '分析上周爆款特征': '📊 上周爆款分析报告（TOP3）：\n\n1️⃣ NH2401 山系冲锋衣-墨绿\n   销量：326件 | 转化率：8.7%\n   爆款因子：KOL「老李穿搭」带货视频播放量破50万\n\n2️⃣ NH2388 多口袋工装裤\n   销量：289件 | 转化率：6.2%\n   爆款因子：小红书素人笔记自然流量爆发\n\n3️⃣ NH2422 露营风卫衣\n   销量：215件 | 转化率：5.8%\n   爆款因子：直播间限时折扣+赠品策略\n\n💡 共性特征：功能性卖点突出、价格带¥199-399、视觉呈现强调户外场景感。建议后续新品强化场景化内容种草。',
-  '当前流行面料趋势': '🧵 2024秋冬面料趋势摘要：\n\n1. 环保再生面料：GRS认证再生涤纶需求增长42%\n2. 轻量化科技面料：20D以下超薄尼龙持续走热\n3. 天然混纺：棉+天丝™混纺手感类产品搜索量↑35%\n4. 功能复合：防水透气+抗菌除臭双功能面料受关注\n5. 质感肌理：华夫格/灯芯绒等复古肌理回归\n\nNOTHOMME建议重点关注1和4方向，与品牌山系定位高度匹配。',
-  '优化NH2401版型建议': '✂️ NH2401版型优化建议：\n\n基于退货数据（尺码问题退货率12%）和用户评价分析：\n\n1. 【肩宽】当前偏窄0.5cm → 建议加宽至46cm(L码)\n2. 【袖长】3条差评提及袖子偏短 → 加长1.5cm\n3. 【下摆】抽绳位置偏低 → 上移2cm提升防风性\n4. 【胸围】亚洲体型适配度不足 → 增加B版宽松选项\n\n预计优化后尺码退货率可降至6%以下。是否生成修改后的工艺单？'
-};
-
-function sendChat() {
-  const input = document.getElementById('chatInput');
-  const text = input.value.trim();
-  if (!text) return;
-  addMsg(text, 'user');
-  input.value = '';
-  setTimeout(() => {
-    let reply = null;
-    for (const key in aiReplies) {
-      if (text.includes(key) || key.includes(text)) { reply = aiReplies[key]; break; }
-    }
-    if (!reply) {
-      reply = '收到您的需求！我正在分析中...\n\n根据您的描述"' + text + '"，我建议从以下角度切入：\n1. 结合NOTHOMME品牌山系调性进行设计延展\n2. 参考当季流行趋势与竞品动态\n3. 综合考虑面料成本与定价策略\n\n请提供更具体的需求细节，我将为您生成更精准的方案 😊';
-    }
-    addMsg(reply, 'ai');
-  }, 600);
-}
-
-function sendQuickQ(el) {
-  document.getElementById('chatInput').value = el.textContent;
-  sendChat();
-}
-
-function addMsg(text, role) {
-  const container = document.getElementById('chatMessages');
-  const div = document.createElement('div');
-  div.className = 'chat-msg ' + role;
-  div.innerHTML = text.replace(/\n/g, '<br>');
-  container.appendChild(div);
-  container.scrollTop = container.scrollHeight;
-}
-
-// ===== Customer Service =====
-const csData = [
-  { customer: '李四', emotion: 'happy', emotionLabel: '满意', msg: '你好，我买的冲锋衣收到了，质量很好！想问下有没有配套的裤子推荐？', aiReply: '感谢您的认可！🎉 推荐搭配NH2388多口袋工装裤或NH2410户外软壳裤，与冲锋衣同系列设计语言，搭配效果出色。目前两件组合下单可享9折优惠哦~' },
-  { customer: '老王', emotion: 'unhappy', emotionLabel: '不满', msg: '衣服尺码偏小了，换货流程太慢了，等了5天还没处理！', aiReply: '非常抱歉给您带来不好的体验🙏 已为您加急处理换货申请，预计2个工作日内完成。同时赠送您一张30元无门槛优惠券作为补偿。后续我们会优化换货流程，感谢您的反馈！' },
-  { customer: '小明同学', emotion: 'neutral', emotionLabel: '中性', msg: '请问NH2415摇粒绒外套有XL码吗？什么时候补货？', aiReply: '您好！NH2415摇粒绒外套XL码预计本周五到货，届时会自动上架。您可以点击"到货提醒"按钮，补货后第一时间通知您。也可以先收藏商品方便查找哦~' },
-  { customer: '老李', emotion: 'happy', emotionLabel: '满意', msg: '上次推荐的工装裤穿着很舒服，还想买一条其他颜色的', aiReply: '太好了！很高兴您喜欢😊 NH2388工装裤目前有墨绿/卡其/黑色三色可选。老客户回购享专属95折，下单时自动抵扣。需要帮您看看各色库存情况吗？' },
-  { customer: '赵六', emotion: 'unhappy', emotionLabel: '不满', msg: '收到的衣服有线头，做工不够精细，和图片差距有点大', aiReply: '非常抱歉！😣 我们已记录您的反馈并安排质检复查。请您拍照发给我们确认具体情况，如确属质量问题将无条件退换并承担运费。NOTHOMME承诺每件产品都经过严格品控，此次疏忽我们深表歉意。' },
-  { customer: '小红', emotion: 'neutral', emotionLabel: '中性', msg: '你们家的衣服适合女生穿吗？看到都是男模展示', aiReply: '当然适合！NOTHOMME主打无性别设计理念，很多款式都是男女通穿的。推荐您看看NH2420防泼水短裤和NH2422露营风卫衣，女生穿也很帅气。我们详情页也有女性模特上身图供参考哦~' }
-];
-
-(function renderCS() {
-  const list = document.getElementById('csList');
-  csData.forEach((item, idx) => {
-    list.innerHTML += `
-    <div class="cs-item emotion-${item.emotion}">
-      <div class="cs-header">
-        <span class="cs-customer">👤 ${item.customer}</span>
-        <span class="cs-emotion ${item.emotion}">${item.emotionLabel}</span>
-      </div>
-      <div class="cs-message">${item.msg}</div>
-      <div class="cs-ai-reply">
-        <div class="ai-label">🤖 AI回复建议</div>
-        <p id="aiReply${idx}">${item.aiReply}</p>
-      </div>
-      <div class="cs-actions">
-        <button class="btn btn-primary btn-sm" onclick="adoptReply(${idx})">✅ 一键采纳</button>
-        <button class="btn btn-outline btn-sm" onclick="editReply(${idx})">✏️ 编辑修改</button>
-        <button class="btn btn-outline btn-sm" onclick="showToast('已转接人工客服')">🔄 转人工</button>
-      </div>
-    </div>`;
-  });
-})();
-
-function adoptReply(idx) {
-  showToast('✅ 已采纳AI回复并发送给客户');
-}
-function editReply(idx) {
-  const el = document.getElementById('aiReply' + idx);
-  const newText = prompt('编辑AI回复：', el.textContent);
-  if (newText !== null && newText.trim()) {
-    el.textContent = newText;
-    showToast('✏️ 回复已修改');
+// Inventory - Channel tabs & SKU data
+(function(){
+  const channels=['淘宝','抖音','得物','京东','线下店'];
+  const tabContainer=document.getElementById('channelTabs');
+  let currentCh='淘宝';
+  const skuData={
+    '淘宝':[{sku:'NH2403-BK-L',name:'NOTHOMME 山系户外夹克 黑色L',qty:23,on:true},{sku:'NH2405-KH-M',name:'NOTHOMME 工装衬衫 卡其M',qty:186,on:true},{sku:'NB2401-NV-M',name:'Nothomme Blue 工装裤 藏青M',qty:95,on:true},{sku:'ST2401-WH-XL',name:'STAW 印花T恤 白色XL',qty:312,on:true},{sku:'NH2408-GY-S',name:'NOTHOMME 机能短裤 灰色S',qty:0,on:false}],
+    '抖音':[{sku:'NH2403-BK-M',name:'NOTHOMME 山系户外夹克 黑色M',qty:67,on:true},{sku:'NH2405-KH-L',name:'NOTHOMME 工装衬衫 卡其L',qty:142,on:true},{sku:'NB2402-BK-S',name:'Nothomme Blue 教练夹克 黑色S',qty:58,on:true},{sku:'ST2402-BK-M',name:'STAW 宽松卫衣 黑色M',qty:203,on:true}],
+    '得物':[{sku:'NH2403-BK-L',name:'NOTHOMME 山系户外夹克 黑色L',qty:45,on:true},{sku:'NB2401-NV-L',name:'Nothomme Blue 工装裤 藏青L',qty:78,on:true},{sku:'ST2401-BK-M',name:'STAW 印花T恤 黑色M',qty:156,on:true}],
+    '京东':[{sku:'NH2405-KH-XL',name:'NOTHOMME 工装衬衫 卡其XL',qty:98,on:true},{sku:'NB2401-NV-XL',name:'Nothomme Blue 工装裤 藏青XL',qty:134,on:true},{sku:'NH2408-GY-M',name:'NOTHOMME 机能短裤 灰色M',qty:210,on:true}],
+    '线下店':[{sku:'NH2403-BK-ALL',name:'NOTHOMME 山系户外夹克 全码',qty:89,on:true},{sku:'NB2401-NV-ALL',name:'Nothomme Blue 工装裤 全码',qty:67,on:true},{sku:'ST2401-WH-ALL',name:'STAW 印花T恤 全码',qty:145,on:true}]
+  };
+  function renderTabs(){
+    tabContainer.innerHTML='';
+    channels.forEach(ch=>{
+      const el=document.createElement('div');el.className='ch-tab'+(ch===currentCh?' active':'');el.textContent=ch;
+      el.onclick=()=>{currentCh=ch;renderTabs();renderSku()};
+      tabContainer.appendChild(el);
+    });
   }
+  function renderSku(){
+    const body=document.getElementById('skuBody');body.innerHTML='';
+    (skuData[currentCh]||[]).forEach(s=>{
+      body.innerHTML+='<tr><td>'+s.sku+'</td><td>'+s.name+'</td><td>'+currentCh+'</td><td>'+(s.qty===0?'<span style="color:#c0392b;font-weight:600">缺货</span>':s.qty)+'</td><td><span class="status-dot '+(s.on?'status-on':'status-off')+'"></span>'+(s.on?'在售':'下架')+'</td><td><button class="btn btn-sm btn-outline" onclick="showToast(\'已同步 '+s.sku+'\')">同步</button></td></tr>';
+    });
+  }
+  renderTabs();renderSku();
+})();
+
+// AI Design Chat
+const designReplies={
+  '山系户外夹克':'🧥 已为您生成3款山系户外夹克设计方案：\n\n方案A：经典军绿配色，YKK防水拉链，可拆卸帽子，适合通勤+轻户外场景\n方案B：雾霾蓝撞色设计，反光条细节，透气网眼内衬\n方案C：全黑机能风，磁吸扣件系统，隐藏式口袋×6\n\n需要我细化某个方案的版型图或面料推荐吗？',
+  '秋季配色':'🎨 2024秋季推荐配色方案：\n\n1️⃣ 山系自然调：苔藓绿 #5B7553 + 砂岩棕 #C4A882 + 雾灰 #9B9B93\n2️⃣ 都市冷调：深海军蓝 #1B2838 + 烟灰 #6B7B8D + 暖白 #F5F0EB\n3️⃣ 复古暖调：焦糖棕 #8B5E3C + 奶油黄 #E8D5B7 + 橄榄绿 #6B7B3A\n\n以上配色已通过Pantone色卡校验，可直接用于面料采购。',
+  '爆款特征':'📊 上周TOP3爆款特征分析：\n\n🥇 NOTHOMME山系夹克（销量1,240件）\n   关键词：多口袋、防泼水、宽松版型、200-400元价位段\n   买家画像：25-35岁男性，一二线城市\n\n🥈 Nothomme Blue工装裤（销量890件）\n   关键词：直筒、水洗做旧、百搭\n\n🥉 STAW印花T恤（销量760件）\n   关键词：oversize、街头涂鸦、纯棉重磅\n\n💡 建议：加大山系品类投入，Q4重点开发山系羽绒/棉服系列。',
+  '蓝岐':'💙 Nothomme Blue 蓝岐系列风格参考：\n\n核心定位：日系简约 × 都市通勤\n关键元素：纯色基础款、微宽松剪裁、高品质面料质感\n本季重点：水洗丹宁、条纹衬衫、针织开衫\n对标品牌：BEAMS PLUS、UNITED ARROWS green label\n\n已为您整理12组参考Lookbook，需要查看吗？',
+  'STAW':'🔥 STAW 街头潮流趋势分析：\n\n当前热门元素：\n• 美式复古运动风（棒球服、_track pants）\n• 解构主义剪裁（不对称下摆、拼接面料）\n• 数字印花/赛博朋克图案\n• 宽松廓形持续走强\n\nQ4建议方向：结合国潮元素+街头廓形，开发联名胶囊系列。',
+  '无感人':'✨ NOTHOMME无感人基础款改良方案：\n\n1. 面料升级：从普通纯棉升级为新疆长绒棉+氨纶混纺，提升垂感和弹性\n2. 版型微调：肩线下降1cm，袖口增加拇指孔设计\n3. 色彩扩展：新增燕麦色、烟灰色两个中性色\n4. 包装升级：环保牛皮纸袋+品牌贴纸\n\n预估成本增加¥3.5/件，售价可上调¥15-20。'
+};
+function sendDesignMsg(text){
+  const chat=document.getElementById('designChat');
+  chat.innerHTML+='<div class="msg user">'+text+'</div>';
+  let reply='🤔 收到您的需求，我正在分析中...\n\n基于睿森三大品牌的设计DNA和当前市场趋势，建议您提供更具体的款式类型或场景描述，我可以给出更精准的方案。';
+  for(const k in designReplies){if(text.includes(k)){reply=designReplies[k];break;}}
+  setTimeout(()=>{chat.innerHTML+='<div class="msg bot">'+reply.replace(/\n/g,'<br>')+'</div>';chat.scrollTop=chat.scrollHeight},600);
+  chat.scrollTop=chat.scrollHeight;
+}
+function sendDesignFromInput(){
+  const input=document.getElementById('designInput');
+  if(!input.value.trim())return;
+  sendDesignMsg(input.value.trim());input.value='';
 }
 
-// ===== Test Panel =====
-const testData = [
-  { name: 'NH2450 轻量羽绒背心', days: 7, exposure: '12.8万', ctr: '4.2%', cvr: '1.8%', cart: '6.5%', decision: 'go', decisionLabel: '放量推广', competitor: '竞品A（波X登）同类款 ¥399 | 我方定价 ¥299 具备价格优势' },
-  { name: 'NH2451 机能束脚裤', days: 5, exposure: '8.6万', ctr: '3.1%', cvr: '1.2%', cart: '4.8%', decision: 'adjust', decisionLabel: '优化调整', competitor: '竞品B（优X库）类似款 ¥199 | 建议强化功能卖点差异化' },
-  { name: 'NH2452 复古抓绒帽', days: 7, exposure: '5.2万', ctr: '1.5%', cvr: '0.4%', cart: '1.8%', decision: 'drop', decisionLabel: '建议淘汰', competitor: '品类整体热度下降，竞品同款已降价至 ¥49' },
-  { name: 'NH2453 防水渔夫帽', days: 6, exposure: '9.3万', ctr: '5.8%', cvr: '2.6%', cart: '8.2%', decision: 'go', decisionLabel: '放量推广', competitor: '竞品C（北X）同类款 ¥189 | 我方 ¥129 性价比突出' },
-  { name: 'NH2454 拼接卫衣', days: 4, exposure: '6.1万', ctr: '2.8%', cvr: '0.9%', cart: '3.5%', decision: 'adjust', decisionLabel: '优化调整', competitor: '竞品D（GU）类似款 ¥149 | 需优化主图点击吸引力' }
-];
-
-(function renderTest() {
-  const grid = document.getElementById('testGrid');
-  testData.forEach(t => {
-    grid.innerHTML += `
-    <div class="test-card">
-      <h4>${t.name} <span class="decision-tag ${t.decision}">${t.decisionLabel}</span></h4>
-      <div style="font-size:12px;color:#888;margin-bottom:10px;">测试天数：${t.days}天 | 曝光量：${t.exposure}</div>
-      <div class="test-metrics">
-        <div class="test-metric"><div class="tm-val">${t.ctr}</div><div class="tm-label">点击率</div></div>
-        <div class="test-metric"><div class="tm-val">${t.cvr}</div><div class="tm-label">转化率</div></div>
-        <div class="test-metric"><div class="tm-val">${t.cart}</div><div class="tm-label">加购率</div></div>
-      </div>
-      <div class="competitor-card">🏷️ <strong>竞品对比：</strong>${t.competitor}</div>
-    </div>`;
+// Customer Service
+(function(){
+  const csData=[
+    {name:'买家A',avatar:'A',emotion:'warn',eLabel:'焦急',q:'你好，我买的山系夹克L码偏小了，能换货吗？已经穿了两天才发现。',ai:'亲，非常抱歉给您带来不便！NOTHOMME山系夹克支持7天无理由退换，即使已穿着也可申请。请您在订单页面点击"申请售后"→选择"换货"→填写正确尺码M码，我们收到退回商品后会第一时间为您发出新尺码。运费由我们承担哦～'},
+    {name:'买家B',avatar:'B',emotion:'ok',eLabel:'平和',q:'请问Nothomme Blue工装裤有30码的吗？详情页没写清楚腰围数据。',ai:'亲您好！Nothomme Blue工装裤30码对应腰围78cm，臀围102cm，裤长100cm。如果您平时穿29-30码牛仔裤，建议选30码。这款裤子版型偏直筒，不挑身材～需要我把详细尺码表发给您参考吗？'},
+    {name:'买家C',avatar:'C',emotion:'bad',eLabel:'不满',q:'发货太慢了！下单5天了还在广州仓没动，你们是不是虚假发货？',ai:'亲，非常理解您的心情！经查询您的订单#DD20240815-3342，包裹已于今天上午从广州仓发出，顺丰快递单号SF1234567890，预计明天送达杭州中转站，后天可派送。近期因秋季新品上架订单量激增，发货时效有所延迟，我们已加派人手处理。为表歉意，确认收货后联系客服领取10元无门槛优惠券～'},
+    {name:'买家D',avatar:'D',emotion:'ok',eLabel:'咨询',q:'STAW那件印花T恤会不会掉色？之前买过别家的洗一次就花了。',ai:'亲放心！STAW印花T恤采用活性印染+高温固色工艺，经过国标GB/T 3920耐摩擦色牢度测试（4级以上），正常机洗不会掉色。建议首次洗涤时翻面冷水洗，避免与浅色衣物混洗即可。我们有质检报告可以提供给您查看哦～'},
+    {name:'买家E',avatar:'E',emotion:'warn',eLabel:'犹豫',q:'想给男朋友买件礼物，他平时穿M码，身高175体重65kg，推荐哪款？',ai:'亲亲好甜呀～根据您男友的身材数据（175/65kg），推荐以下三款：\n1️⃣ NOTHOMME山系夹克M码（¥329）- 最热销款，实用百搭\n2️⃣ Nothomme Blue教练夹克M码（¥289）- 轻便帅气\n3️⃣ STAW宽松卫衣M码（¥259）- 舒适休闲\n三款都支持礼盒包装+贺卡代写服务，下单备注"礼物"即可～'},
+    {name:'买家F',avatar:'F',emotion:'ok',eLabel:'好评',q:'上次买的工装裤质量真好，这次想再入一条不同颜色的，有优惠吗？',ai:'感谢老客户的认可！🥰 您是我们的回头客，可以享受以下专属福利：\n• 复购立减15元（自动抵扣）\n• 满2件再享9折\n• 会员积分双倍\n目前工装裤有藏青/卡其/黑色三色可选，建议搭配入手更划算～'},
+    {name:'买家G',avatar:'G',emotion:'bad',eLabel:'投诉',q:'收到的衣服有线头，而且吊牌是歪的，品控太差了吧！要求退货退款！',ai:'亲，非常抱歉给您带来了不好的体验！🙏 线头和吊牌问题我们已记录并反馈给广州工厂品控部门。您的订单支持无条件退货退款，我已为您开启绿色通道：\n1. 无需寄回，直接退款至原支付账户\n2. 额外补偿20元店铺优惠券\n3. 该批次产品已启动复检\n再次致歉，我们会持续改进品质！'}
+  ];
+  const container=document.getElementById('csList');
+  csData.forEach(c=>{
+    const emotionClass=c.emotion==='ok'?'emotion-ok':c.emotion==='warn'?'emotion-warn':'emotion-bad';
+    container.innerHTML+='<div class="cs-item"><div class="cs-avatar">'+c.avatar+'</div><div class="cs-body"><div class="cs-header"><span class="cs-name">'+c.name+'</span><span class="cs-emotion '+emotionClass+'">'+c.eLabel+'</span></div><div class="cs-question">'+c.q+'</div><div class="cs-ai">🤖 AI建议回复：<br>'+c.ai.replace(/\n/g,'<br>')+'</div><div class="cs-actions"><button class="btn btn-sm btn-primary" onclick="showToast(\'✅ 已采纳AI回复并发送\')">✅ 一键采纳</button><button class="btn btn-sm btn-outline" onclick="showToast(\'已进入编辑模式\')">✏️ 编辑修改</button><button class="btn btn-sm btn-outline" onclick="showToast(\'已转接人工客服\')">👤 转人工</button></div></div></div>';
   });
 })();
 
+// Test Panel
+(function(){
+  const testData=[
+    {name:'NOTHOMME 山系冲锋衣',brand:'NOTHOMME',clickRate:'8.2%',cartRate:'3.1%',convRate:'1.8%',decision:'go',decText:'✅ 建议放量推广',compete:'竞品均价 ¥399 | 我方 ¥329 有优势'},
+    {name:'Nothomme Blue 灯芯绒外套',brand:'NB',clickRate:'6.5%',cartRate:'2.4%',convRate:'1.2%',decision:'adj',decText:'🔧 调整定价后重测',compete:'竞品均价 ¥359 | 我方 ¥389 偏高'},
+    {name:'STAW 数码印花卫衣',brand:'STAW',clickRate:'9.1%',cartRate:'4.2%',convRate:'2.5%',decision:'go',decText:'✅ 建议放量推广',compete:'竞品均价 ¥299 | 我方 ¥279 有优势'},
+    {name:'NOTHOMME 摇粒绒马甲',brand:'NOTHOMME',clickRate:'4.3%',cartRate:'1.5%',convRate:'0.6%',decision:'stop',decText:'❌ 建议淘汰',compete:'竞品均价 ¥199 | 我方 ¥249 无竞争力'},
+    {name:'Nothomme Blue 牛津纺衬衫',brand:'NB',clickRate:'5.8%',cartRate:'2.8%',convRate:'1.5%',decision:'adj',decText:'🔧 优化主图后重测',compete:'竞品均价 ¥219 | 我方 ¥199 价格OK'}
+  ];
+  const container=document.getElementById('testGrid');
+  testData.forEach(t=>{
+    const decClass=t.decision==='go'?'dec-go':t.decision==='adj'?'dec-adj':'dec-stop';
+    container.innerHTML+='<div class="test-card"><h4><span>'+t.name+'</span><span style="font-size:12px;color:#888;font-weight:400">'+t.brand+'</span></h4><div class="test-metrics"><div class="test-metric"><div class="v">'+t.clickRate+'</div><div class="l">点击率</div></div><div class="test-metric"><div class="v">'+t.cartRate+'</div><div class="l">加购率</div></div><div class="test-metric"><div class="v">'+t.convRate+'</div><div class="l">转化率</div></div></div><div class="test-decision '+decClass+'">'+t.decText+'</div><div class="compete-row"><span>🏷️ '+t.compete+'</span></div></div>';
+  });
+})();
 </script>
 </body>
 </html>
